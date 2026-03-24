@@ -48,60 +48,60 @@ function Sidebar() {
   );
 }
 
-// --- Calendar ---
-const days = ["S", "M", "T", "W", "T", "F", "S"];
-const aprilDays = [
-  [null, 1, 2, 3, 4, 5, 6],
-  [7, 8, 9, 10, 11, 12, 13],
-  [14, 15, 16, 17, 18, 19, 20],
-  [21, 22, 23, 24, 25, 26, 27],
-  [28, 29, 30, 31, null, null, null],
-];
+// // --- Calendar ---
+// const days = ["S", "M", "T", "W", "T", "F", "S"];
+// const aprilDays = [
+//   [null, 1, 2, 3, 4, 5, 6],
+//   [7, 8, 9, 10, 11, 12, 13],
+//   [14, 15, 16, 17, 18, 19, 20],
+//   [21, 22, 23, 24, 25, 26, 27],
+//   [28, 29, 30, 31, null, null, null],
+// ];
 
-function Calendar() {
-  const [month] = useState("APRIL");
-  return (
-    <div className="flex-none w-52">
-      {/* Month header */}
-      <div className="flex items-center justify-between rounded-3xl px-3 py-1.5 mb-2.5"
-        style={{ background: "#f5c842" }}>
-        <button className="bg-transparent border-none cursor-pointer text-white font-bold text-base">‹</button>
-        <span className="font-bold text-white tracking-widest text-sm">{month}</span>
-        <button className="bg-transparent border-none cursor-pointer text-white font-bold text-base">›</button>
-      </div>
+// function Calendar() {
+//   const [month] = useState("APRIL");
+//   return (
+//     <div className="flex-none w-52">
+//       {/* Month header */}
+//       <div className="flex items-center justify-between rounded-3xl px-3 py-1.5 mb-2.5"
+//         style={{ background: "#f5c842" }}>
+//         <button className="bg-transparent border-none cursor-pointer text-white font-bold text-base">‹</button>
+//         <span className="font-bold text-white tracking-widest text-sm">{month}</span>
+//         <button className="bg-transparent border-none cursor-pointer text-white font-bold text-base">›</button>
+//       </div>
 
-      {/* Days of week */}
-      <div className="grid grid-cols-7 mb-0.5">
-        {days.map((d, i) => (
-          <div key={i} className="text-center text-xs font-bold py-0.5"
-            style={{ color: i === 0 ? "#e85d8a" : "#6c5fb7" }}>
-            {d}
-          </div>
-        ))}
-      </div>
+//       {/* Days of week */}
+//       <div className="grid grid-cols-7 mb-0.5">
+//         {days.map((d, i) => (
+//           <div key={i} className="text-center text-xs font-bold py-0.5"
+//             style={{ color: i === 0 ? "#e85d8a" : "#6c5fb7" }}>
+//             {d}
+//           </div>
+//         ))}
+//       </div>
 
-      {/* Dates */}
-      {aprilDays.map((week, wi) => (
-        <div key={wi} className="grid grid-cols-7">
-          {week.map((d, di) => (
-            <div key={di}
-              className="text-center text-xs flex items-center justify-center w-6 h-6 mx-auto my-px"
-              style={{
-                color: d === 9 ? "#fff" : di === 0 ? "#e85d8a" : "#555",
-                background: d === 9 ? "#6c5fb7" : "transparent",
-                borderRadius: d === 9 ? "50%" : 0,
-                fontWeight: d === 9 ? 700 : 400,
-                cursor: d ? "pointer" : "default",
-              }}
-            >
-              {d || ""}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
+//       {/* Dates */}
+//       {aprilDays.map((week, wi) => (
+//         <div key={wi} className="grid grid-cols-7">
+//           {week.map((d, di) => (
+//             <div key={di}
+//               className="text-center text-xs flex items-center justify-center w-6 h-6 mx-auto my-px"
+//               style={{
+//                 color: d === 9 ? "#fff" : di === 0 ? "#e85d8a" : "#555",
+//                 background: d === 9 ? "#6c5fb7" : "transparent",
+//                 borderRadius: d === 9 ? "50%" : 0,
+//                 fontWeight: d === 9 ? 700 : 400,
+//                 cursor: d ? "pointer" : "default",
+//               }}
+//             >
+//               {d || ""}
+//             </div>
+//           ))}
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
 
 // --- Event List ---
 const events = [
@@ -292,18 +292,18 @@ export default function Dashboard() {
           {/* Top row */}
           <div className="flex gap-5 bg-white rounded-2xl p-5"
             style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-            <Calendar />
-            <EventList />
+            {/* <Calendar /> */}
+            {/* <EventList /> */}
             <div className="w-px bg-gray-100 shrink-0" />
-            <Visits />
+            {/* <Visits /> */}
             <div className="w-px bg-gray-100 shrink-0" />
-            <Messages />
+            {/* <Messages /> */}
           </div>
 
           {/* Bottom row */}
           <div className="bg-white rounded-2xl p-5"
             style={{ boxShadow: "0 2px 16px rgba(0,0,0,0.06)" }}>
-            <StatChart />
+            {/* <StatChart /> */}
           </div>
         </div>
       </div>
