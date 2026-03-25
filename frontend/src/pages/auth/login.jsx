@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function LoginForm() {
 
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +19,7 @@ export default function LoginForm() {
 
     const data = await response.json()
     alert(data.message)
-    console.log(data)
+
     setEmail("")
     setPassword("")
     console.log({ email, password, });
@@ -74,7 +75,7 @@ export default function LoginForm() {
         </form>
         <div className="m-2.5 ">
           <a href="http://localhost:5173/signup"
-          className="text-[20px] text-blue-400 underline py-2.5"
+            className="text-[20px] text-blue-400 underline py-2.5"
           >
             Sign Up
           </a>
