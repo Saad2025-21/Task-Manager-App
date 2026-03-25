@@ -60,7 +60,8 @@ export const login = async (req, res, next) => {
 
         const { password: pass, ...rest } = user._doc
 
-        res.status(200).cookie("access_token", token, { httpOnly: true }).json({ rest });
+        res.status(200).cookie("access_token", token, { httpOnly: true })
+        .json({ rest ,success: true, message: 'Login successfully'});
     }
     catch (error) {
         return next(error);

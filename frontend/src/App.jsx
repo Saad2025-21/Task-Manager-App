@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import "./index.css"
-import Login from './pages/auth/Login';
-import Signup from './pages/auth/Signup';
+import Login from './pages/auth/login';
+import Signup from './pages/auth/signup';
 import Dashboard from './pages/admin/Dashboard';
 import ManageTasks from './pages/admin/managetask';
 import PrivateRoute from './routes/PrivateRoute';
@@ -16,7 +16,7 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
           {/* admin routes */}
