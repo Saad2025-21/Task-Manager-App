@@ -6,20 +6,21 @@ import jwt from 'jsonwebtoken';
 export const signup = async (req, res, next) => {
     const { name, email, password, adminJoinCode } = req.body;
 
-    if (!name || !email || !password || name === '' || email === '' || password === '') {
+    if (!name || !email || !password) {
         return next(handleError(400, 'All fields are required'));
     }
 
-    // check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
         return next(handleError(409, 'User already exists'));
     }
 
-    //CHECK IF ADMIN
     let role = 'user';
 
-    if (adminJoinCode && adminJoinCode === process.env.ADMIN_JOIN_CODE) {
+    if (
+        adminJoinCode &&
+        adminJoinCode.trim() === process.env.ADMIN_JOIN_CODE
+    ) {
         role = 'admin';
     }
 
@@ -31,13 +32,18 @@ export const signup = async (req, res, next) => {
         password: hashedpassword,
         role
     });
+
     try {
         await newUser.save();
-        return res.status(201).json({ success: true, message: 'User registered successfully' });
+        return res.status(201).json({
+            success: true,
+            role,
+            message: 'User registered successfully'
+        });
     } catch (error) {
         return next(error);
     }
-}
+};
 
 export const login = async (req, res, next) => {
     try {
@@ -55,13 +61,13 @@ export const login = async (req, res, next) => {
         if (!validpassord) {
             return next(handleError(401, 'Invalid password'));
         }
-
-        const token = jwt.sign({ id: user._id , role: user.role}, process.env.JWT_SECRET);
+        
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
 
         const { password: pass, ...rest } = user._doc
 
         res.status(200).cookie("access_token", token, { httpOnly: true })
-        .json({ rest ,success: true, message: 'Login successfully'});
+            .json({ rest,token,role:user.role, success: true, message: 'Login successfull' });
     }
     catch (error) {
         return next(error);

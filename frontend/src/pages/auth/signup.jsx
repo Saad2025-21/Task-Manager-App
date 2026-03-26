@@ -1,36 +1,47 @@
 import { useState } from "react";
+import axiosInstance from '../../utilis/axiosinstance'
+import { API_PATHS } from "../../utilis/apipath";
 
-export default function LoginForm() {
+
+export default function loginForm() {
+
   const [name, setname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setrole] = useState("user")
-  const [AdminCode, setAdminCode] = useState();
-
-
+  const [adminJoinCode, setadminJoinCode] = useState("");
+  const [Error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await fetch("http://localhost:3000/api/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password, role, AdminCode }),
-    })
 
-    const data = await response.json()
-    alert(data.message)
-    setname("")
-    setEmail("")
-    setPassword("")
-    setrole("user")
-    console.log({ name, email, password, role, AdminCode });
+
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.SignUP, {
+        name, email, password, adminJoinCode
+      })
+
+      setname("")
+      setEmail("")
+      setPassword("")
+      setadminJoinCode("")
+
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message)
+      } else {
+        setError("something went wrong")
+      }
+    }
   };
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-md ">
+        {Error && (
+          <p className="text-red-500 text-sm mt-2">{Error}</p>
+        )}
         {/* Header */}
         <p className="text-[35px] text-black text-center font-medium mb-3.5 -mt-2.5 tracking-wide ">
           Sign Up
@@ -84,22 +95,10 @@ export default function LoginForm() {
 
           {/* role */}
           <div className="m-2.5">
-            <input type="radio"
-              name="role"
-              value="user"
-              onChange={(e) => setrole(e.target.value)}
-              defaultChecked
-              className="m-1.5" />User
-            <input type="radio"
-              name="role"
-              value="admin"
-              onChange={(e) => setrole(e.target.value)}
-              className="m-1.5" />Admin
             <input type="text"
-              value={AdminCode}
+              value={adminJoinCode}
               placeholder="Enter Admin Code ( If Admin )"
-              onChange={(e) => setAdminCode(e.target.value)}
-              required={role === "admin" ? true : false}
+              onChange={(e) => setadminJoinCode(e.target.value)}
               className="w-full px-4 py-3 mt-1.5 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition" />
           </div>
 
@@ -109,15 +108,16 @@ export default function LoginForm() {
           >Sign up
           </button>
         </form>
-         <div className="m-2.5 ">
-       
+        <div className="m-2.5 ">
+
           <a href="http://localhost:5173/"
-          className="text-[20px] text-blue-400 underline py-2.5"
+            className="text-[20px] text-blue-400 underline py-2.5"
           >
-             Login
+            Login
           </a>
         </div>
       </div>
+
     </div>
   );
 }

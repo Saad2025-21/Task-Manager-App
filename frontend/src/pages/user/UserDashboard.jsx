@@ -1,10 +1,9 @@
-import TaskManager from "../../components/sidebar"
+import React from 'react'
 
-// --- Main Dashboard ---
-export default function Dashboard() {
+const UserDashboard = () => {
   return (
-    <div className="flex h-screen" style={{ fontFamily: "'Nunito', 'Segoe UI', sans-serif", background: "#f4f4f9" }}>
-      <TaskManager />
-    </div>
-  );
+    <div>UserDashboard</div>
+  )
 }
+
+export default UserDashboard

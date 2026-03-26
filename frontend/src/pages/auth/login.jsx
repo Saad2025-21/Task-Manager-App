@@ -1,4 +1,7 @@
 import { useState } from "react";
+import axiosInstance from '../../utilis/axiosinstance'
+import { API_PATHS } from "../../utilis/apipath";
+import { useNavigate } from "react-router";
 
 export default function LoginForm() {
 
@@ -6,28 +9,53 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [Error, setError] = useState(false);
 
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const response = await fetch("http://localhost:3000/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    })
 
-    const data = await response.json()
-    alert(data.message)
 
-    setEmail("")
-    setPassword("")
+
+    try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email, password,
+      })
+
+      const { token, role } = response.data
+
+      if (token) {
+        localStorage.setItem("token", token)
+
+        if (role === 'admin') {
+          navigate("/admin/dashboard")
+        } else {
+          navigate("/user/dashboard")
+        }
+      }
+      setEmail("")
+      setPassword("")
+
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message)
+      } else {
+        setError("something went wrong")
+      }
+    }
+
     console.log({ email, password, });
   };
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+
       <div className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-md ">
+        {Error && (
+          <p className="text-red-500 text-sm mt-2">{Error}</p>
+        )}
         {/* Header */}
         <p className="text-[35px] text-black text-center font-medium mb-3.5 -mt-2.5 tracking-wide ">
           Login
