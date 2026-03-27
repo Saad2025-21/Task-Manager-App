@@ -9,7 +9,7 @@ export default function DashboardLayout() {
             const token = localStorage.getItem("token"); // wherever you store it after login
 
            
-            const res = await fetch("http://localhost:3000/api/task/admin-dashboard", {
+            const res = await fetch("https://task-manager-site-6i2o.onrender.com/api/task/admin-dashboard", {
                 headers: {
                     "Authorization": `Bearer ${token}`,
                     "Content-Type": "application/json"

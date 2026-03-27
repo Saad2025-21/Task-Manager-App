@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://task-manager-site-6i2o.onrender.com/";
 export default BASE_URL;
 
 export const API_PATHS = {
