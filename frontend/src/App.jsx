@@ -7,7 +7,7 @@ import Signup from './pages/auth/signup';
 import Logout from './pages/auth/logout'
 
 import Dashboard from './pages/admin/Dashboard';
-import ManageTasks from './pages/admin/managetask';
+import ManageTasks from './pages/admin/ManageTask';
 
 import CreateTask from './pages/admin/createTask';
 import UserDashboard from './pages/user/UserDashboard';
