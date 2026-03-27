@@ -21,18 +21,18 @@ const taskSchema = new mongoose.Schema({
     },
     priority: {
         type: String,
-        enum: ['low', 'medium', 'high'],
-        default: 'low',
+        enum: ['Low', 'Medium', 'High'],
+        default: 'Low',
     },
     status: {
         type: String,
         enum: ['pending', 'in-progress', 'completed'],
         default: 'pending',
     },
-    assignee: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
+    // assignee: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User',
+    // }],
     createdBy: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

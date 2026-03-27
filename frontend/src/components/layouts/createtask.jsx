@@ -1,10 +1,12 @@
 import { useState } from "react";
+import axiosInstance from '../../utilis/axiosinstance'
+import { API_PATHS } from "../../utilis/apipath";
 
-export default function CreateTask({ addTask }) {
+export default function CreateTask() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState("Low");
-    const [dueDate, setDueDate] = useState("");
+   
     const [todoInput, setTodoInput] = useState("");
     const [todos, setTodos] = useState([]);
 
@@ -20,32 +22,31 @@ export default function CreateTask({ addTask }) {
 
     const handleRemoveTodo = (id) => setTodos(todos.filter((t) => t.id !== id));
 
-    const handleSubmit = () => {
-        if (!title.trim()) return alert("Please enter a task title.");
+  const handleSubmit = async () => {
+  if (!title.trim()) return alert("Please enter a task title.");
 
-        const newTask = {
-            id: Date.now(),
-            title,
-            description,
-            priority,
-            status: "Pending",
-            taskDone: 0,
-            taskTotal: todos.length,
-            startDate: new Date().toLocaleDateString(),
-            dueDate,
-            todos,
-        };
-        
-        addTask(newTask);
-        alert("Task created successfully!");
-
-
-        setTitle("");
-        setDescription("");
-        setPriority("Low");
-        setDueDate("");
-        setTodos([]);
+  try {
+    const newTask = {
+      title,
+      description,
+      priority,
+      todochecklist: todos,
     };
+
+    const res = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, newTask);
+    alert("Task created successfully!");
+    console.log("Created task:", res.data);
+
+
+    setTitle("");
+    setDescription("");
+    setPriority("Low");
+    setTodos([]);
+  } catch (error) {
+    console.error("Error creating task:", error);
+    alert("Failed to create task");
+  }
+};
 
     return (
 
@@ -108,7 +109,7 @@ export default function CreateTask({ addTask }) {
                     </div>
                 </div>
 
-                {/* Due Date */}
+                {/* Due Date
                 <div>
                     <label className="block text-sm font-medium text-gray-600 mb-1.5">
                         Due Date
@@ -119,7 +120,7 @@ export default function CreateTask({ addTask }) {
                         onChange={(e) => setDueDate(e.target.value)}
                         className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition cursor-pointer"
                     />
-                </div>
+                </div> */}
             </div>
 
             {/* TODO Checklist */}

@@ -9,16 +9,15 @@ export const createTask = async (req, res, next) => {
             title,
             description,
             priority,
-            assignee,
             todochecklist,
         } = req.body
 
-        if (!Array.isArray(assignee)) {
-            return next(handleError(404, "assigned to must have more IDs"))
-        }
+        // if (!Array.isArray(assignee)) {
+        //     return next(handleError(404, "assigned to must have more IDs"))
+        // }
 
         const Tasks = await Task.create({
-            title, description, priority, assignee, todochecklist, createdBy: [req.user.id],
+            title, description, priority, todochecklist, createdBy: [req.user.id],
         })
 
         res.status(201).json({
@@ -278,7 +277,7 @@ export const getDashboardData = async (req, res, next) => {
 
         taskDistribution["all"] = totalTask
 
-        const taskpriority = ["low", "medium", "high"]
+        const taskpriority = ["Low", "Medium", "High"]
 
         const taskprioritylevelraw = await Task.aggregate(
             [
@@ -296,11 +295,11 @@ export const getDashboardData = async (req, res, next) => {
             return acc
         }, {})
 
-        //fetch recent task
+        
         const recentTask = await Task.find()
             .sort({ createdBy: -1 })
             .limit(10)
-            .select("title status priority createdBy")
+            .select("id title description status priority todochecklist createdBy")
         res.status(200).json({
             statistics: {
                 totalTask,
@@ -360,7 +359,7 @@ export const userDashboard = async (req, res, next) => {
             return acc
         }, {})
         // console.log(taskDistribution)
-        const priorities = ["low", "medium", "high"]
+        const priorities = ["Low", "Medium", "High"]
 
         const prioritylevelRaw = await Task.aggregate([{
             $match: { assignee: userObjectId },

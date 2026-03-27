@@ -26,9 +26,17 @@ export default function TaskCard({ task }) {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3 hover:shadow-md transition-shadow duration-200">
       {/* Badges */}
       <div className="flex items-center gap-2 flex-wrap">
-        <span className={`text-xs font-medium px-3 py-1 rounded-full ${statusStyles[task.status]}`}>
+        <span
+          className={`text-xs font-medium px-3 py-1 rounded-full 
+    ${statusStyles[task.status]} 
+    ${task.status?.toLowerCase() === "pending" ? "text-red-500" : ""}
+    ${task.status?.toLowerCase() === "in progress" ? "text-orange-500" : ""}
+    ${task.status?.toLowerCase() === "completed" ? "text-green-400" : ""}`}
+        >
           {task.status}
         </span>
+
+
         <span className={`text-xs font-medium px-3 py-1 rounded-full ${priorityStyles[task.priority]}`}>
           {task.priority}
         </span>
@@ -40,7 +48,7 @@ export default function TaskCard({ task }) {
         <p className="text-sm text-gray-400 leading-relaxed line-clamp-2">{task.description}</p>
       </div>
 
-      {/* Progress Bar */}
+      {/* Progress Bar
       <div>
         <p className="text-sm text-gray-500 mb-1.5">
           Task Done: <span className="font-semibold text-gray-700">{task.taskDone} / {task.taskTotal}</span>
@@ -51,9 +59,9 @@ export default function TaskCard({ task }) {
             style={{ width: `${progress}%` }}
           />
         </div>
-      </div>
+      </div> */}
 
-      {/* Dates */}
+      {/* Dates
       <div className="flex justify-between text-xs text-gray-400 pt-1">
         <div>
           <p className="font-medium text-gray-500 mb-0.5">Start Date</p>
@@ -63,7 +71,7 @@ export default function TaskCard({ task }) {
           <p className="font-medium text-gray-500 mb-0.5">Due Date</p>
           <p className="font-semibold text-gray-700 text-sm">{task.dueDate}</p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

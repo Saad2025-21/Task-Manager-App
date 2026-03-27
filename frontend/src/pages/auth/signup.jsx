@@ -21,12 +21,14 @@ export default function loginForm() {
       const response = await axiosInstance.post(API_PATHS.AUTH.SignUP, {
         name, email, password, adminJoinCode
       })
-
+      const token = response.data.token; 
+      localStorage.setItem("token", token);
       setname("")
       setEmail("")
       setPassword("")
       setadminJoinCode("")
 
+      alert(response.data.message)
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message)
