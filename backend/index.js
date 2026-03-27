@@ -13,8 +13,8 @@ const app = express();
 const PORT = 3000;
 
 const allowedOrigins = [
-  "http://localhost:5173", // dev
-  "https://task-manager-frontend-xphy.onrender.com" // deployed frontend
+  "http://localhost:5173", 
+  "https://task-manager-frontend-xphy.onrender.com" 
 ];
 
 mongoose.connect(process.env.MONGO_URI)
@@ -25,7 +25,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like curl, mobile apps)
+   
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
