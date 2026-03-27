@@ -18,7 +18,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 //Middleware to handle CORS
 app.use(cors({
-    origin: process.env.FRONT_END_URL ||'https://task-manager-site-6i2o.onrender.com',
+    origin:'https://task-manager-site-6i2o.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
