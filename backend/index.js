@@ -12,21 +12,31 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const PORT = 3000;
 
+const allowedOrigins = [
+  "http://localhost:5173", // dev
+  "https://task-manager-frontend-xphy.onrender.com" // deployed frontend
+];
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log('Connected to MongoDB'))
 .catch((err) => console.error('Could not connect to MongoDB...', err));
 
 //Middleware to handle CORS
-app.use(cors({
-<<<<<<< HEAD
-    origin: process.env.FRONT_END_URL ||'https://task-manager-site-6i2o.onrender.com',
-=======
-    origin:'https://task-manager-site-6i2o.onrender.com',
->>>>>>> a0e3b6b68e9e44570ba0285f529f616ea2249f5f
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
 
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow requests with no origin (like curl, mobile apps)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+}));
 // Middleware to parse JSON requests
 app.use(express.json());
 
