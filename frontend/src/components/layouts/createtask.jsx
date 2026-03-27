@@ -6,7 +6,7 @@ export default function CreateTask() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [priority, setPriority] = useState("Low");
-   
+    const [status, setstatus] = useState("pending");
     const [todoInput, setTodoInput] = useState("");
     const [todos, setTodos] = useState([]);
 
@@ -22,31 +22,33 @@ export default function CreateTask() {
 
     const handleRemoveTodo = (id) => setTodos(todos.filter((t) => t.id !== id));
 
-  const handleSubmit = async () => {
-  if (!title.trim()) return alert("Please enter a task title.");
+    const handleSubmit = async () => {
+        if (!title.trim()) return alert("Please enter a task title.");
 
-  try {
-    const newTask = {
-      title,
-      description,
-      priority,
-      todochecklist: todos,
+        try {
+            const newTask = {
+                title,
+                description,
+                priority,
+                status,
+                todochecklist: todos,
+            };
+
+            const res = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, newTask);
+            alert("Task created successfully!");
+            console.log("Created task:", res.data);
+
+
+            setTitle("");
+            setDescription("");
+            setPriority("Low");
+            setstatus("pending")
+            setTodos([]);
+        } catch (error) {
+            console.error("Error creating task:", error);
+            alert("Failed to create task");
+        }
     };
-
-    const res = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, newTask);
-    alert("Task created successfully!");
-    console.log("Created task:", res.data);
-
-
-    setTitle("");
-    setDescription("");
-    setPriority("Low");
-    setTodos([]);
-  } catch (error) {
-    console.error("Error creating task:", error);
-    alert("Failed to create task");
-  }
-};
 
     return (
 
@@ -83,7 +85,7 @@ export default function CreateTask() {
                 />
             </div>
 
-            {/* Priority / Due Date */}
+            {/* Priority / status */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
                 {/* Priority */}
                 <div>
@@ -109,18 +111,30 @@ export default function CreateTask() {
                     </div>
                 </div>
 
-                {/* Due Date
                 <div>
                     <label className="block text-sm font-medium text-gray-600 mb-1.5">
-                        Due Date
+                        Progress
                     </label>
-                    <input
-                        type="date"
-                        value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
-                        className="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition cursor-pointer"
-                    />
-                </div> */}
+                    <div className="relative">
+                        <select
+                            value={status}
+                            onChange={(e) => setstatus(e.target.value)}
+                            className="w-full appearance-none border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-300 transition cursor-pointer"
+                        >
+                            <option value={'pending'}>pending</option>
+                            <option value={'in-progress'}>in-progress</option>
+                            <option value={'completed'}>completed</option>
+                        </select>
+                        <svg
+                            className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                </div>
+
+
             </div>
 
             {/* TODO Checklist */}

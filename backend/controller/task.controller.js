@@ -9,6 +9,7 @@ export const createTask = async (req, res, next) => {
             title,
             description,
             priority,
+            status,
             todochecklist,
         } = req.body
 
@@ -17,7 +18,7 @@ export const createTask = async (req, res, next) => {
         // }
 
         const Tasks = await Task.create({
-            title, description, priority, todochecklist, createdBy: [req.user.id],
+            title, description, priority, status, todochecklist, createdBy: [req.user.id],
         })
 
         res.status(201).json({
@@ -253,6 +254,7 @@ export const updateTaskchecklist = async (req, res, next) => {
 export const getDashboardData = async (req, res, next) => {
     try {
         const totalTask = await Task.countDocuments()
+        const inprogress = await Task.countDocuments({ "status": "in-progress" })
         const pendingTask = await Task.countDocuments({ "status": "pending" })
         const completedTask = await Task.countDocuments({ "status": "completed" })
 
@@ -295,7 +297,7 @@ export const getDashboardData = async (req, res, next) => {
             return acc
         }, {})
 
-        
+
         const recentTask = await Task.find()
             .sort({ createdBy: -1 })
             .limit(10)
@@ -303,6 +305,7 @@ export const getDashboardData = async (req, res, next) => {
         res.status(200).json({
             statistics: {
                 totalTask,
+                inprogress,
                 pendingTask,
                 completedTask,
             },

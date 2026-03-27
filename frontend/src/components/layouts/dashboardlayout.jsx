@@ -61,7 +61,7 @@ export default function DashboardLayout() {
             {/* Charts */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <TaskDistributionChart data={taskDistributionData} />
-                <TaskPriorityChart data={priorityData} />
+                {/* <TaskPriorityChart data={priorityData} /> */}
             </div>
         </main>
     );
