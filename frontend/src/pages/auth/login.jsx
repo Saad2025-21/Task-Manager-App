@@ -102,7 +102,7 @@ export default function LoginForm() {
           </button>
         </form>
         <div className="m-2.5 ">
-          <a navigate ("/signup")
+          <a onClick={navigate('/signup')}
             className="text-[20px] text-blue-400 underline py-2.5"
           >
             Sign Up
