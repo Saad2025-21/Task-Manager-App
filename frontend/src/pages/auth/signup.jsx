@@ -110,13 +110,13 @@ export default function loginForm() {
           >Sign up
           </button>
         </form>
-        <div className="m-2.5 ">
-
-          <a href="https://task-manager-frontend-xphy.onrender.com/"
-            className="text-[20px] text-blue-400 underline py-2.5"
+          <div className="mt-4 text-center">
+          <button 
+            onClick={() => navigate('/')} 
+            className="text-blue-400 underline text-sm cursor-pointer"
           >
-            Login
-          </a>
+           Already have an Account? Login
+          </button>
         </div>
       </div>
 
