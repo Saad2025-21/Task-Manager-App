@@ -3,7 +3,7 @@
 A full stack Task Manager App buid with React and Node js.
 
 ## Tech stack 
-- Frontend: React
+- Frontend: React,tailwindcss,axios
 - Backend: Node js, Mongo DB, express js
 
 ## Features
