@@ -11,7 +11,7 @@ const LogoutPage = () => {
     localStorage.removeItem("user");
 
    
-    navigate("/login");
+    navigate("/");
   };
 
   const handleCancel = () => {
