@@ -101,12 +101,13 @@ export default function LoginForm() {
             Login
           </button>
         </form>
-        <div className="m-2.5 ">
-          <a onClick={navigate('/signup')}
-            className="text-[20px] text-blue-400 underline py-2.5"
+             <div className="mt-4 text-center">
+          <button 
+            onClick={() => navigate('/signup')} 
+            className="text-blue-400 underline text-sm cursor-pointer"
           >
-            Sign Up
-          </a>
+            Don't have an account? Sign Up
+          </button>
         </div>
       </div>
     </div>
