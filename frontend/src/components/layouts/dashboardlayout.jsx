@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import { Stats, TaskDistributionChart, TaskPriorityChart } from "./charts";
+import axiosInstance from "../../utilis/axiosinstance"
+import { API_PATHS } from "../../utilis/apipath";
 
 export default function DashboardLayout() {
     const [dashboardData, setDashboardData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem("token"); // wherever you store it after login
+            const token = localStorage.getItem("token");
 
-           
-            const res = await fetch("https://task-manager-site-6i2o.onrender.com/api/task/admin-dashboard", {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
+            try {
+                if (token) {
+                    const res = await axiosInstance.get(API_PATHS.TASKS.GET_DASHBOARD_DATA)
+                    const data = await res.data;
+                    setDashboardData(data);
                 }
-            });
 
-            if (!res.ok) {
-                throw new Error("Failed to fetch dashboard data");
+
+            } catch (error) {
+                alert(error)
             }
 
-            const data = await res.json();
-            setDashboardData(data);
+
         };
 
         fetchData();
@@ -34,7 +35,7 @@ export default function DashboardLayout() {
     const stats = [
         { label: "Total Tasks", value: dashboardData.statistics.totalTask, color: "#3B82F6" },
         { label: "Pending Tasks", value: dashboardData.statistics.pendingTask, color: "#8B5CF6" },
-        { label: "In Progress", value: dashboardData.chart.taskDistribution.inprogress, color: "#06B6D4" },
+        { label: "In Progress", value: dashboardData.statistics.inprogress, color: "#06B6D4" },
         { label: "Completed Tasks", value: dashboardData.statistics.completedTask, color: "#22C55E" },
     ];
 
@@ -45,9 +46,9 @@ export default function DashboardLayout() {
     ];
 
     const priorityData = [
-        { name: "Low", value: dashboardData.chart.taskpriorityLevel.low, color: "#22C55E" },
-        { name: "Medium", value: dashboardData.chart.taskpriorityLevel.medium, color: "#F97316" },
-        { name: "High", value: dashboardData.chart.taskpriorityLevel.high, color: "#F43F5E" },
+        { name: "Low", value: dashboardData.chart.taskpriorityLevel.Low, color: "#22C55E" },
+        { name: "Medium", value: dashboardData.chart.taskpriorityLevel.Medium, color: "#F97316" },
+        { name: "High", value: dashboardData.chart.taskpriorityLevel.High, color: "#F43F5E" },
     ];
 
     return (
@@ -61,7 +62,7 @@ export default function DashboardLayout() {
             {/* Charts */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <TaskDistributionChart data={taskDistributionData} />
-                {/* <TaskPriorityChart data={priorityData} /> */}
+                <TaskPriorityChart data={priorityData} />
             </div>
         </main>
     );

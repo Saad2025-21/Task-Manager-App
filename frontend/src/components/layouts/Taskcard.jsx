@@ -1,55 +1,106 @@
-import React from "react";
-
-const statusStyles = {
-  "In Progress": "bg-cyan-50 text-cyan-600 border border-cyan-200",
-  Pending: "bg-purple-50 text-purple-600 border border-purple-200",
-  Completed: "bg-green-50 text-green-600 border border-green-200",
-};
-
-const priorityStyles = {
-  "High Priority": "bg-red-50 text-red-500 border border-red-200",
-  "Medium Priority": "bg-orange-50 text-orange-400 border border-orange-200",
-  "Low Priority": "bg-green-50 text-green-500 border border-green-200",
-};
-
-
-
 export default function TaskCard({ task }) {
+  const totalTask = task.todochecklist?.length || 0;
+  const pendingTask = task.todochecklist?.filter(item => !item.completed).length || 0;
+  const progress = totalTask > 0 ? ((totalTask - pendingTask) / totalTask) * 100 : 0;
 
-  
 
+  const statusStyles = {
+    pending: {
+      text: "text-red-600",
+      bg: "bg-red-50",
+      border: "border-red-200",
+      dot: "bg-red-500",
+    },
+    'in-progress': {
+      text: "text-orange-600",
+      bg: "bg-orange-50",
+      border: "border-orange-200",
+      dot: "bg-orange-500",
+    },
+    completed: {
+      text: "text-green-600",
+      bg: "bg-green-50",
+      border: "border-green-200",
+      dot: "bg-green-500",
+    },
+  };
 
+  const priorityStyles = {
+    High: {
+      text: "text-red-600",
+      bg: "bg-red-50",
+      border: "border-red-200",
+      dot: "bg-red-500",
+    },
+    Medium: {
+      text: "text-orange-600",
+      bg: "bg-orange-50",
+      border: "border-orange-200",
+      dot: "bg-orange-500",
+    },
+    low: {
+      text: "text-green-600",
+      bg: "bg-green-50",
+      border: "border-green-200",
+      dot: "bg-green-500",
+    },
+  };
+
+  const styles = statusStyles[task.status] || statusStyles.pending;
+  const pri_styles = priorityStyles[task.priority] || priorityStyles.High;
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-4 hover:shadow-md transition-shadow duration-200">
-      {/* Badges */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <span
-          className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full shadow-sm 
-          ${statusStyles[task.status]}`}
-        >
-          {task.status}
-        </span>
-
-        <span
-          className={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full shadow-sm 
-          ${priorityStyles[task.priority]}`}
-        >
-          {task.priority}
-        </span>
-      </div>
-
-      {/* Title & Description */}
-      <div>
-        <h3 className="font-semibold text-gray-800 text-base leading-snug mb-1">
+    <div className="bg-white rounded-2xl shadow-md p-5 w-80">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-1">
+        <h2 className="text-lg font-bold text-gray-900 leading-tight">
           {task.title}
-        </h3>
-        <p className="text-sm text-gray-500 leading-relaxed line-clamp-2">
-          {task.description}
-        </p>
+        </h2>
+        <div>
+          <span
+            className={`ml-3 mt-0.5 mb-1.5 inline-flex items-center gap-1 text-xs font-medium 
+        ${styles.text} ${styles.bg} ${styles.border} rounded-full px-2.5 py-1 whitespace-nowrap`}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full ${styles.dot} inline-block`}></span>
+            {task.status}
+          </span>
+          <span
+            className={`ml-3 mt-0.5 mb-1.5 inline-flex items-center gap-1 text-xs font-medium 
+        ${pri_styles.text} ${pri_styles.bg} ${pri_styles.border} rounded-full px-2.5 py-1 whitespace-nowrap`}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full ${pri_styles.dot} inline-block`}></span>
+            {task.priority}
+          </span>
+        </div>
+
       </div>
-   
+
+      {/* Description */}
+      <p className="text-sm text-gray-500 mb-4 leading-snug">
+        {task.description}
+      </p>
 
 
+
+      <span className="mb-2.5">Task done:</span>
+
+      {/* Progress Bar */}
+      <div className="w-full bg-gray-100 rounded-full h-2 mb-3 mt-1.5 overflow-hidden">
+        <div
+          className="h-2 rounded-full bg-blue-400 transition-all duration-500"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between text-sm">
+        <span className="text-gray-800 font-medium">
+          <span className="font-bold">{totalTask - pendingTask}</span>
+          <span className="text-gray-400">/{totalTask}</span>
+        </span>
+        <span className="font-semibold text-gray-700">
+          {Math.round(progress)}%
+        </span>
+      </div>
     </div>
   );
 }

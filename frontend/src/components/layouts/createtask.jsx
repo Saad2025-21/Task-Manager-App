@@ -12,13 +12,13 @@ export default function CreateTask() {
 
     const handleAddTodo = () => {
         if (todoInput.trim()) {
-            setTodos([...todos, { id: Date.now(), text: todoInput.trim(), done: false }]);
+            setTodos([...todos, { id: Date.now(), text: todoInput.trim(), completed: false }]);
             setTodoInput("");
         }
     };
 
     const handleToggleTodo = (id) =>
-        setTodos(todos.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+        setTodos(todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)));
 
     const handleRemoveTodo = (id) => setTodos(todos.filter((t) => t.id !== id));
 
@@ -168,12 +168,12 @@ export default function CreateTask() {
                             >
                                 <input
                                     type="checkbox"
-                                    checked={todo.done}
+                                    checked={todo.completed}
                                     onChange={() => handleToggleTodo(todo.id)}
                                     className="w-4 h-4 accent-blue-500 cursor-pointer"
                                 />
                                 <span
-                                    className={`flex-1 text-sm ${todo.done ? "line-through text-gray-400" : "text-gray-700"
+                                    className={`flex-1 text-sm ${todo.completed ? "line-through text-gray-400" : "text-gray-700"
                                         }`}
                                 >
                                     {todo.text}

@@ -257,7 +257,6 @@ export const getDashboardData = async (req, res, next) => {
         const inprogress = await Task.countDocuments({ "status": "in-progress" })
         const pendingTask = await Task.countDocuments({ "status": "pending" })
         const completedTask = await Task.countDocuments({ "status": "completed" })
-
         const taskstatuses = ["pending", "in-progress", "completed"]
 
         const taskDistributionRaw = await Task.aggregate([
