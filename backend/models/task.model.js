@@ -29,15 +29,16 @@ const taskSchema = new mongoose.Schema({
         enum: ['pending', 'in-progress', 'completed'],
         default: 'pending',
     },
-    // assignee: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User',
-    // }],
+
     createdBy: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }],
-
+    assignee: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        default: []
+    }],
     todochecklist: [todoschema],
 
     progress: {

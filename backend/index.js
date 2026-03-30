@@ -14,19 +14,19 @@ const PORT = 3000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-"https://task-manager-app-1386.vercel.app",
-  "https://task-manager-frontend-xphy.onrender.com" 
+  "https://task-manager-app-1386.vercel.app",
+  "https://task-manager-frontend-xphy.onrender.com"
 ];
 
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('Connected to MongoDB'))
-.catch((err) => console.error('Could not connect to MongoDB...', err));
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((err) => console.error('Could not connect to MongoDB...', err));
 
 //Middleware to handle CORS
 
 app.use(cors({
   origin: function (origin, callback) {
-   
+
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
@@ -44,27 +44,27 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-    res.send('Hello, World!');
+  res.send('Hello, World!');
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 
 });
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/Task',userTask)
+app.use('/api/Task', userTask)
 
 
 app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    const message = err.message || 'Internal Server Error';
-    res.status(statusCode).json({ 
-        success: false,
-        statusCode,
-        message
-     });
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message
+  });
 });
 
 export default app;

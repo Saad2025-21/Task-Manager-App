@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
 export default function TaskCard({ task }) {
+const navigate = useNavigate()
+
   const totalTask = task.todochecklist?.length || 0;
   const pendingTask = task.todochecklist?.filter(item => !item.completed).length || 0;
   const progress = totalTask > 0 ? ((totalTask - pendingTask) / totalTask) * 100 : 0;
@@ -49,7 +52,10 @@ export default function TaskCard({ task }) {
   const styles = statusStyles[task.status] || statusStyles.pending;
   const pri_styles = priorityStyles[task.priority] || priorityStyles.High;
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 w-80">
+    <div className="bg-white rounded-2xl shadow-md p-5 w-80"
+    onClick={()=>{
+      navigate(`/admin/create-task/${task._id}`) 
+    }}>
       {/* Header */}
       <div className="flex items-start justify-between mb-1">
         <h2 className="text-lg font-bold text-gray-900 leading-tight">

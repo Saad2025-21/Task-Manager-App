@@ -11,14 +11,21 @@ export const createTask = async (req, res, next) => {
             priority,
             status,
             todochecklist,
+            assignee,
         } = req.body
 
-        // if (!Array.isArray(assignee)) {
-        //     return next(handleError(404, "assigned to must have more IDs"))
-        // }
+        if (assignee && !Array.isArray(assignee)) {
+            return next(handleError(400, "Assignee must be an array of user IDs"))
+        }
 
         const Tasks = await Task.create({
-            title, description, priority, status, todochecklist, createdBy: [req.user.id],
+            title,
+            description,
+            priority,
+            status,
+            todochecklist,
+            createdBy: [req.user.id],
+            assignee: assignee || [req.user.id],
         })
 
         res.status(201).json({
@@ -42,18 +49,12 @@ export const getTask = async (req, res, next) => {
         let tasks
 
         if (req.user.role === 'admin') {
-            tasks = await Task.find(filter).populate(
-                "assignee",
-                "name email"
-            )
+            tasks = await Task.find(filter)
         } else {
             tasks = await Task.find({
                 ...filter,
                 assignee: req.user.id,
-            }).populate(
-                "assignee",
-                "name email"
-            )
+            })
         }
 
         tasks = await Promise.all(
@@ -107,22 +108,29 @@ export const getTask = async (req, res, next) => {
 
 export const getTaskById = async (req, res, next) => {
     try {
-        const task = await Task.findById(req.params.id).populate(
-            "assignee",
-            "name email"
-        )
-        if (!task) {
-            return next(404, "Task not found")
+        const { id } = req.params;
+
+     
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "Invalid task ID" });
         }
 
-        res.status(200).json(task)
+        const task = await Task.findById(id)
+        if (!task) {
+            return res.status(404).json({ message: "Task not found" });
+        }
+
+        res.status(200).json(task);
+
     } catch (error) {
-        return next(error)
+        console.error("GET TASK ERROR:", error); 
+        return res.status(500).json({ message: "Server Error" });
     }
-}
+};
 
 export const updateTask = async (req, res, next) => {
     try {
+
         const task = await Task.findById(req.params.id);
 
         if (!task) {
@@ -137,19 +145,19 @@ export const updateTask = async (req, res, next) => {
 
         if (req.body.assignee) {
             if (!Array.isArray(req.body.assignee)) {
-                return next(handleError(404, "Should be more than one ID"))
+                return next(handleError(400, "Assignee must be an array of user IDs"))
             }
-
-            task.assignee = req.body.assignee || task.assignee
+            task.assignee = req.body.assignee
         }
 
         const updateTask = await task.save()
 
-        return res.status(200).json(
+        return res.status(200).json({
 
-            updateTask, { message: "Task updated successfully" }
+            task: updateTask,
+            message: "Task updated successfully",
 
-        )
+        })
     } catch (error) {
         return next(error)
     }
@@ -180,7 +188,7 @@ export const updateTaskStatus = async (req, res, next) => {
             return next(handleError(404, "Task not found"))
         }
 
-        const isAssign = await Task.assignee?.some(
+        const isAssign = task.assignee?.some(
             (userId) => userId.toString() === req.user.id.toString()
         )
 
@@ -212,8 +220,8 @@ export const updateTaskchecklist = async (req, res, next) => {
             return next(handleError(404, "Task not found"))
         }
 
-        if (!task.assignee.includes(req.user.id) && req.user.role !== "admin") {
-            return next(handleError(404, "Not authorized to update the checklist"))
+        if (!task.assignee?.includes(req.user.id) && req.user.role !== "admin") {
+            return next(handleError(403, "Not authorized to update the checklist"))
         }
 
         task.todochecklist = todochecklist
@@ -236,10 +244,7 @@ export const updateTaskchecklist = async (req, res, next) => {
 
         await task.save()
 
-        const updatedTask = await Task.findById(req.params.id).populate(
-            "assignee",
-            "name email"
-        )
+        const updatedTask = await Task.findById(req.params.id)
 
         res.status(200).json(
 

@@ -13,8 +13,7 @@ const ManageTask = () => {
     const fetchTasks = async () => {
       try {
         const res = await axiosInstance.get(API_PATHS.TASKS.GET_DASHBOARD_DATA);
-        setTasks(res.data.recentTask || []); 
-        console.log("Fetched tasks:", res.data.recentTask);    
+        setTasks(res.data.recentTask || []);  
       } catch (error) {
         console.error("Error fetching tasks:", error);
         setTasks([]);                       
