@@ -50,17 +50,12 @@ app.use(cookieParser());
 
 
 
-const dirname = path.resolve()
-
-app.use(express.static(path.join(dirname, "frontend")));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
-app.use((_, res) => {
-  res.sendFile(path.join(dirname, "frontend", "index.html"));
-});
+
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
