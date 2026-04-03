@@ -59,8 +59,13 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
+<<<<<<< HEAD
 app.get("/*", (_, res) => {
   res.sendFile(path.resolve(dirname, "frontend", "dist", "index.html"))
+=======
+app.get("*", (_, res) => {
+  res.sendFile(path.resolve(dirname, "frontend", "index.html"))
+>>>>>>> 549309ad427fb1987eda7671b23b4a622f6a4d94
 })
 
 app.use((err, req, res, next) => {
