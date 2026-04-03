@@ -59,7 +59,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
-app.get("*", (_, res) => {
+app.get("/*", (_, res) => {
   res.sendFile(path.resolve(dirname, "frontend", "dist", "index.html"))
 })
 
