@@ -52,11 +52,13 @@ app.use(cookieParser());
 
 const dirname = path.resolve()
 
+app.use(express.static(path.join(dirname, "frontend")));
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
-app.get("/*", (_, res) => {
+app.get("*", (_, res) => {
   res.sendFile(path.resolve(dirname, "frontend", "index.html"))
 })
 
