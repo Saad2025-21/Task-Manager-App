@@ -58,9 +58,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
-app.get("*", (_, res) => {
-  res.sendFile(path.resolve(dirname, "frontend", "index.html"))
-})
+app.use((_, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
+});
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
