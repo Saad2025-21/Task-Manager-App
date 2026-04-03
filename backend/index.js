@@ -44,14 +44,11 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// app.get('/', (req, res) => {
+//   res.send('Hello, World!');
+// });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
 
-});
 
 const dirname = path.resolve()
 
@@ -59,13 +56,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
-<<<<<<< HEAD
 app.get("/*", (_, res) => {
-  res.sendFile(path.resolve(dirname, "frontend", "dist", "index.html"))
-=======
-app.get("*", (_, res) => {
   res.sendFile(path.resolve(dirname, "frontend", "index.html"))
->>>>>>> 549309ad427fb1987eda7671b23b4a622f6a4d94
 })
 
 app.use((err, req, res, next) => {
@@ -78,4 +70,8 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+
+});
 export default app;
