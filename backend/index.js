@@ -60,7 +60,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
 app.get("*", (_, res) => {
-  res.sendFile(path.resolve(dirname, "frontend", "dist", "index.html"))
+  res.sendFile(path.resolve(dirname, "frontend", "index.html"))
 })
 
 app.use((err, req, res, next) => {
