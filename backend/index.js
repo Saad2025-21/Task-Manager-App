@@ -8,6 +8,7 @@ import authRoutes from './routes/auth.route.js';
 import userRoutes from './routes/user.route.js';
 import userTask from './routes/task.route.js'
 import cookieParser from 'cookie-parser';
+import path from "path"
 
 const app = express();
 const PORT = 3000;
@@ -52,10 +53,15 @@ app.listen(PORT, () => {
 
 });
 
+const dirname = path.resolve()
+
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
+app.get("*", (_, res) => {
+  res.sendFile(path.resolve(dirname, "frontend", "dist", "index.html"))
+})
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
