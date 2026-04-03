@@ -59,7 +59,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/Task', userTask)
 
 app.use((_, res) => {
-  res.sendFile(path.join(dirname, "frontend", "build", "index.html"));
+  res.sendFile(path.join(dirname, "frontend", "index.html"));
 });
 
 app.use((err, req, res, next) => {
