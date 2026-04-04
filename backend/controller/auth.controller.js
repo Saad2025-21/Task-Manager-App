@@ -4,7 +4,7 @@ import handleError from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res, next) => {
-    const { name, email, password, adminJoinCode } = req.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
         return next(handleError(400, 'All fields are required'));
@@ -17,12 +17,12 @@ export const signup = async (req, res, next) => {
 
     let role = 'user';
 
-    if (
-        adminJoinCode &&
-        adminJoinCode.trim() === process.env.ADMIN_JOIN_CODE
-    ) {
-        role = 'admin';
-    }
+    // if (
+    //     adminJoinCode &&
+    //     adminJoinCode.trim() === process.env.ADMIN_JOIN_CODE
+    // ) {
+    //     role = 'admin';
+    // }
 
     const hashedpassword = await bcrypt.hash(password, 10);
 
