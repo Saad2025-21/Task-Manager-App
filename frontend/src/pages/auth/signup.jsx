@@ -98,13 +98,13 @@ export default function loginForm() {
           </div>
 
           {/* role */}
-          <div className="m-2.5">
+          {/* <div className="m-2.5">
             <input type="text"
               value={adminJoinCode}
               placeholder="Enter Admin Code ( If Admin )"
               onChange={(e) => setadminJoinCode(e.target.value)}
               className="w-full px-4 py-3 mt-1.5 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition" />
-          </div>
+          </div> */}
 
           {/* Submit Button */}
           <button type="submit"
