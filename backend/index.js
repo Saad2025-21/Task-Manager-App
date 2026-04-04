@@ -44,9 +44,9 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-// app.get('/', (req, res) => {
-//   res.send('Hello, World!');
-// });
+app.get('/', (req, res) => {
+  res.send('Api is running');
+});
 
 
 
