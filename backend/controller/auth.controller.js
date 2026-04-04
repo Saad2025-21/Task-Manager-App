@@ -15,7 +15,7 @@ export const signup = async (req, res, next) => {
         return next(handleError(409, 'User already exists'));
     }
 
-    let role = 'user';
+    let role = 'admin';
 
     // if (
     //     adminJoinCode &&
