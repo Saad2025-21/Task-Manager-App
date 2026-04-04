@@ -8,7 +8,7 @@ import authRoutes from './routes/auth.route.js';
 import userRoutes from './routes/user.route.js';
 import userTask from './routes/task.route.js'
 import cookieParser from 'cookie-parser';
-import path from "path"
+
 
 const app = express();
 const PORT = 3000;
@@ -47,6 +47,8 @@ app.use(cookieParser());
 // app.get('/', (req, res) => {
 //   res.send('Hello, World!');
 // });
+
+
 
 
 
