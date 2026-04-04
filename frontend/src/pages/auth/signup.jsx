@@ -10,7 +10,6 @@ export default function loginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [adminJoinCode, setadminJoinCode] = useState("");
   const [Error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -21,14 +20,14 @@ export default function loginForm() {
 
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.SignUP, {
-        name, email, password, adminJoinCode
+        name, email, password
       })
       const token = response.data.token; 
       localStorage.setItem("token", token);
       setname("")
       setEmail("")
       setPassword("")
-      setadminJoinCode("")
+   
 
       alert(response.data.message)
     } catch (error) {
