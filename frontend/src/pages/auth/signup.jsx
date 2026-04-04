@@ -10,7 +10,6 @@ export default function loginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [adminJoinCode, setadminJoinCode] = useState("");
   const [Error, setError] = useState(false);
 
   const navigate = useNavigate();
@@ -21,14 +20,14 @@ export default function loginForm() {
 
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.SignUP, {
-        name, email, password, adminJoinCode
+        name, email, password
       })
       const token = response.data.token; 
       localStorage.setItem("token", token);
       setname("")
       setEmail("")
       setPassword("")
-      setadminJoinCode("")
+   
 
       alert(response.data.message)
     } catch (error) {
@@ -98,13 +97,13 @@ export default function loginForm() {
           </div>
 
           {/* role */}
-          <div className="m-2.5">
+          {/* <div className="m-2.5">
             <input type="text"
               value={adminJoinCode}
               placeholder="Enter Admin Code ( If Admin )"
               onChange={(e) => setadminJoinCode(e.target.value)}
               className="w-full px-4 py-3 mt-1.5 border border-slate-200 rounded-xl text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition" />
-          </div>
+          </div> */}
 
           {/* Submit Button */}
           <button type="submit"
