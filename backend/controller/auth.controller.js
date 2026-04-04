@@ -4,7 +4,7 @@ import handleError from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
 export const signup = async (req, res, next) => {
-    const { name, email, password} = req.body;
+    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
         return next(handleError(400, 'All fields are required'));
@@ -26,7 +26,7 @@ export const signup = async (req, res, next) => {
         password: hashedpassword,
         role
     });
-
+    console.log(newUser)
     try {
         await newUser.save();
         return res.status(201).json({
@@ -55,13 +55,13 @@ export const login = async (req, res, next) => {
         if (!validpassord) {
             return next(handleError(401, 'Invalid password'));
         }
-        
+
         const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET);
 
         const { password: pass, ...rest } = user._doc
 
         res.status(200).cookie("access_token", token, { httpOnly: true })
-            .json({ rest,token,role:user.role, success: true, message: 'Login successfull' });
+            .json({ rest, token, role: user.role, success: true, message: 'Login successfull' });
     }
     catch (error) {
         return next(error);
