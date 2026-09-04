@@ -4,6 +4,7 @@ import TaskCard from "../../components/layouts/Taskcard";
 import FilterTabs from "../../components/layouts/filtertab";
 import axiosInstance from "../../utilis/axiosinstance";
 import { API_PATHS } from "../../utilis/apipath";
+import { TbLoader3 } from "react-icons/tb";
 
 const ManageTask = () => {
   const [tasks, setTasks] = useState([]);   
@@ -58,7 +59,7 @@ const ManageTask = () => {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-24 text-gray-400">
-            <p className="text-lg font-medium">No tasks found</p>
+            <TbLoader3 className="animate-spin relative top-7" size={70}/>
           </div>
         )}
       </div>
