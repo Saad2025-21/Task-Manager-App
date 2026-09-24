@@ -27,7 +27,7 @@ axiosInstance.interceptors.request.use(
                 console.error("server is down")
             }
         } else if (error.code === "ECONNABORTED") {
-            console.error("Requwst timeout")
+            console.error("Request timeout")
         }
         return Promise.reject(error)
     }

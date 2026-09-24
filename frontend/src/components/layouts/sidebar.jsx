@@ -42,8 +42,8 @@ export default function Sidebar() {
             `}>
                 
                 {/* Branding Section */}
-                <div className="flex flex-col items-start mb-10 px-2">
-                    <h1 className="text-xl font-extrabold uppercase bg-gradient-to-br from-violet-600 to-cyan-500 bg-clip-text text-transparent tracking-wider">
+                <div className="flex flex-col items-start mb-20 mt-8 px-2">
+                    <h1 className="text-xl font-extrabold uppercase bg-linear-to-br from-violet-600 to-cyan-500 bg-clip-text text-transparent tracking-wider">
                         TaskManager
                     </h1>
                     <span className="text-gray-400 text-xs font-semibold mt-1 tracking-tight">
@@ -52,14 +52,14 @@ export default function Sidebar() {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="flex flex-col gap-1.5">
+                <nav className="flex flex-col gap-8">
                     {navItems.map((item) => (
                         <NavLink
                             key={item.label}
                             to={item.path}
                             onClick={() => setIsOpen(false)} 
                             className={({ isActive }) =>
-                                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
+                                `flex items-center gap-8 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
                                 ${isActive
                                     ? "text-blue-600 bg-blue-50 border-l-4 border-blue-500 shadow-sm"
                                     : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"

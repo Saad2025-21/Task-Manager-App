@@ -52,12 +52,13 @@ const navigate = useNavigate()
   const styles = statusStyles[task.status] || statusStyles.pending;
   const pri_styles = priorityStyles[task.priority] || priorityStyles.High;
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 w-80"
+    <div className="bg-white rounded-2xl shadow-md p-5 w-100"
     onClick={()=>{
-      navigate(`/admin/create-task/${task._id}`) 
+      console.log('task._id:', task._id, typeof task._id);
+      navigate(`/admin/taskdetail/${task._id}`) 
     }}>
       {/* Header */}
-      <div className="flex items-start justify-between mb-1">
+      <div className="flex items-start justify-between mb-12">
         <h2 className="text-lg font-bold text-gray-900 leading-tight">
           {task.title}
         </h2>
@@ -90,7 +91,7 @@ const navigate = useNavigate()
       <span className="mb-2.5">Task done:</span>
 
       {/* Progress Bar */}
-      <div className="w-full bg-gray-100 rounded-full h-2 mb-3 mt-1.5 overflow-hidden">
+      <div className="w-full bg-gray-100 rounded-full h-2 mb-4 mt-2 overflow-hidden">
         <div
           className="h-2 rounded-full bg-blue-400 transition-all duration-500"
           style={{ width: `${progress}%` }}

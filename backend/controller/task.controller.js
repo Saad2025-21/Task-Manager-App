@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import Task from "../models/task.model.js";
 import handleError from "../utils/error.js";
+import { updateUserProfile } from "./auth.controller.js";
 
 
 export const createTask = async (req, res, next) => {
@@ -110,7 +111,7 @@ export const getTaskById = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-     
+
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: "Invalid task ID" });
         }
@@ -123,7 +124,7 @@ export const getTaskById = async (req, res, next) => {
         res.status(200).json(task);
 
     } catch (error) {
-        console.error("GET TASK ERROR:", error); 
+        console.error("GET TASK ERROR:", error);
         return res.status(500).json({ message: "Server Error" });
     }
 };
@@ -142,7 +143,6 @@ export const updateTask = async (req, res, next) => {
         task.priority = req.body.priority || task.priority
         task.status = req.body.status || task.status
         task.todochecklist = req.body.todochecklist || task.todochecklist
-
         if (req.body.assignee) {
             if (!Array.isArray(req.body.assignee)) {
                 return next(handleError(400, "Assignee must be an array of user IDs"))
@@ -158,6 +158,7 @@ export const updateTask = async (req, res, next) => {
             message: "Task updated successfully",
 
         })
+
     } catch (error) {
         return next(error)
     }

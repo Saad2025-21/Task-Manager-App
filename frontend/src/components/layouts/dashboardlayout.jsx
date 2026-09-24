@@ -29,7 +29,7 @@ export default function DashboardLayout() {
     }, []);
 
 
-    if (!dashboardData) return <p>Loading...</p>;
+    if (!dashboardData) return <p className="px-8 py-8">Loading...</p>;
 
 
     const stats = [

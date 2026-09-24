@@ -38,9 +38,9 @@ const ManageTask = () => {
   return (
     <div className="flex min-h-screen bg-gray-50 font-sans">
       <Sidebar />
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-8 mt-4">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-end gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-start gap-4 mb-20">
           <div className="flex flex-wrap items-center gap-3">
             <FilterTabs
               filters={filters}
@@ -52,7 +52,7 @@ const ManageTask = () => {
 
         {/* Task Grid */}
         {filteredTasks.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20">
             {filteredTasks.map((task) => (
               <TaskCard key={task._id} task={task} />
             ))}

@@ -4,12 +4,12 @@ import { Cell } from "recharts";
 
 export  function Stats({ stats }) {
   return (
-    <div className="flex flex-wrap gap-8 mt-5">
+    <div className="flex flex-wrap gap-60 mt-[6.5rem]">
       {stats.map((stat) => (
         <div key={stat.label} className="flex items-center gap-2">
-          <div className="w-1.5 h-6 rounded-full" style={{ backgroundColor: stat.color }} />
-          <span className="text-gray-800 font-bold text-lg">{stat.value}</span>
-          <span className="text-gray-400 text-sm">{stat.label}</span>
+          <div className="w-1.5 h-10 rounded-full" style={{ backgroundColor: stat.color }} />
+          <span className="text-gray-800 font-bold text-[25px]">{stat.value}</span>
+          <span className="text-gray-400 text-[17px]">{stat.label}</span>
         </div>
       ))}
     </div>
@@ -21,7 +21,7 @@ export  function Stats({ stats }) {
  export  function TaskDistributionChart({ data }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">Task Distribution</h2>
+      <h2 className="text-lg font-semibold text-gray-800 mb-8 mt-4">Task Distribution</h2>
       <ResponsiveContainer width="100%" height={260}>
         <PieChart>
           <Pie
@@ -41,7 +41,7 @@ export  function Stats({ stats }) {
         </PieChart>
       </ResponsiveContainer>
       {/* Legend */}
-      <div className="flex justify-center gap-6 mt-2">
+      <div className="flex justify-center gap-6 mt-12">
         {data.map((item) => (
           <div key={item.name} className="flex items-center gap-1.5">
             <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
@@ -58,7 +58,7 @@ export  function Stats({ stats }) {
 export  function TaskPriorityChart({ data }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">Task Priority Levels</h2>
+      <h2 className="text-lg font-semibold text-gray-800 mb-16 mt-4 ">Task Priority Levels</h2>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={data} barSize={60}>
           <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "#9CA3AF", fontSize: 13 }} />

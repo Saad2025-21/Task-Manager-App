@@ -22,13 +22,13 @@ export default function loginForm() {
       const response = await axiosInstance.post(API_PATHS.AUTH.SignUP, {
         name, email, password
       })
-      const token = response.data.token; 
+      const token = response.data.token;
       localStorage.setItem("token", token);
       setname("")
       setEmail("")
       setPassword("")
-   
 
+      console.log(response.data.message)
       alert(response.data.message)
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -111,12 +111,12 @@ export default function loginForm() {
           >Sign up
           </button>
         </form>
-          <div className="mt-4 text-center">
-          <button 
-            onClick={() => navigate('/')} 
+        <div className="mt-4 text-center">
+          <button
+            onClick={() => navigate('/')}
             className="text-blue-400 underline text-sm cursor-pointer"
           >
-           Already have an Account? Login
+            Already have an Account? Login
           </button>
         </div>
       </div>

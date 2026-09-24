@@ -57,14 +57,14 @@ export default function LoginForm() {
           <p className="text-red-500 text-sm mt-2">{Error}</p>
         )}
         {/* Header */}
-        <p className="text-[35px] text-black text-center font-medium mb-3.5 -mt-2.5 tracking-wide ">
+        <p className="text-[35px] text-black text-center font-medium mb-12 mt-8 tracking-wide ">
           Login
         </p>
         <form onSubmit={handleSubmit}>
 
 
           {/* Email */}
-          <div className="mb-4">
+          <div className="mb-7">
             <input
               type="email"
               placeholder="Email address"
@@ -76,7 +76,7 @@ export default function LoginForm() {
           </div>
 
           {/* Password */}
-          <div className="mb-4 relative">
+          <div className="mb-35 relative">
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Password"

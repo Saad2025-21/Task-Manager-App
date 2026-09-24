@@ -16,7 +16,7 @@ export const verifyToken = (req, res, next) => {
 
 
 export const adminOnly = (req, res, next) => {
-     console.log("User in adminOnly:", req.user);
+    //  console.log("User in adminOnly:", req.user);
     if (req.user.role === 'admin') {
 
         next();
