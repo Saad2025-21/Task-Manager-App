@@ -15,7 +15,7 @@ const PORT = 3000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://task-manager-frontend-xphy.onrender.com",
+  "https://task-manager-app-1386.vercel.app",
 ];
 
 mongoose.connect(process.env.MONGO_URI)
