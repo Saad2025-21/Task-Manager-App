@@ -52,7 +52,7 @@ const navigate = useNavigate()
   const styles = statusStyles[task.status] || statusStyles.pending;
   const pri_styles = priorityStyles[task.priority] || priorityStyles.High;
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 w-100"
+    <div className="bg-white rounded-2xl shadow-md p-5 w-65"
     onClick={()=>{
       console.log('task._id:', task._id, typeof task._id);
       navigate(`/admin/taskdetail/${task._id}`) 

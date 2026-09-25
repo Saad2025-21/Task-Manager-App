@@ -4,12 +4,12 @@ import { Cell } from "recharts";
 
 export  function Stats({ stats }) {
   return (
-    <div className="flex flex-wrap gap-60 mt-26">
+    <div className="flex flex-wrap gap-6 mt-[3rem]">
       {stats.map((stat) => (
         <div key={stat.label} className="flex items-center gap-2">
-          <div className="w-1.5 h-10 rounded-full" style={{ backgroundColor: stat.color }} />
-          <span className="text-gray-800 font-bold text-[25px]">{stat.value}</span>
-          <span className="text-gray-400 text-[17px]">{stat.label}</span>
+          <div className="w-1.5 h-5 rounded-full" style={{ backgroundColor: stat.color }} />
+          <span className="text-gray-800 font-bold text-[22px]">{stat.value}</span>
+          <span className="text-gray-400 text-[13px]">{stat.label}</span>
         </div>
       ))}
     </div>
