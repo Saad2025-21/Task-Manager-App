@@ -15,7 +15,6 @@ const PORT = 3000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://task-manager-app-1386.vercel.app",
   "https://task-manager-frontend-xphy.onrender.com",
 ];
 

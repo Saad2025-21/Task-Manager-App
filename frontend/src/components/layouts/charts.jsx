@@ -4,7 +4,7 @@ import { Cell } from "recharts";
 
 export  function Stats({ stats }) {
   return (
-    <div className="flex flex-wrap gap-60 mt-[6.5rem]">
+    <div className="flex flex-wrap gap-60 mt-26">
       {stats.map((stat) => (
         <div key={stat.label} className="flex items-center gap-2">
           <div className="w-1.5 h-10 rounded-full" style={{ backgroundColor: stat.color }} />

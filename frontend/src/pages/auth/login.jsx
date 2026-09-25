@@ -16,9 +16,6 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-
-
-
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
         email, password,
