@@ -5,7 +5,7 @@ import FilterTabs from "../../components/layouts/filtertab";
 import axiosInstance from "../../utilis/axiosinstance";
 import { API_PATHS } from "../../utilis/apipath";
 import { TbLoader3 } from "react-icons/tb";
-
+import Topbar from "../../components/layouts/Topbar"
 const ManageTask = () => {
   const [tasks, setTasks] = useState([]);   
   const [activeFilter, setActiveFilter] = useState("All");
@@ -36,10 +36,12 @@ const ManageTask = () => {
   );
 
   return (
-    <div className="flex min-h-screen bg-gray-50 font-sans">
+    <div className="display">
       <Sidebar />
-      <div className="flex-1 p-8 mt-4">
-        {/* Header */}
+      <div className="flex flex-col flex-1 min-w-0 gap-2">
+        <Topbar />
+        <div className="flex-1 min-h-0 overflow-auto">
+         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-start gap-4 mb-20">
           <div className="flex flex-wrap items-center gap-3">
             <FilterTabs
@@ -62,6 +64,7 @@ const ManageTask = () => {
             <TbLoader3 className="animate-spin relative top-7" size={70}/>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

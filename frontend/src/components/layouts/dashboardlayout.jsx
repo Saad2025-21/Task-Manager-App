@@ -3,6 +3,7 @@ import { Stats, TaskDistributionChart, TaskPriorityChart } from "./charts";
 import axiosInstance from "../../utilis/axiosinstance"
 import { API_PATHS } from "../../utilis/apipath";
 
+
 export default function DashboardLayout() {
     const [dashboardData, setDashboardData] = useState(null);
 
@@ -52,9 +53,9 @@ export default function DashboardLayout() {
     ];
 
     return (
-        <main className="flex-1 p-8 flex flex-col gap-6">
+        <main className="w-full h-full bg-[#f5f5f5]">
             {/* Header */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+            <div className="bg-surface rounded-2xl shadow-sm border border-gray-100 p-6">
                 <h1 className="text-3xl font-bold text-gray-800">Welcome!</h1>
                 <Stats stats={stats} />
             </div>
@@ -63,7 +64,7 @@ export default function DashboardLayout() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <TaskDistributionChart data={taskDistributionData} />
                 <TaskPriorityChart data={priorityData} />
-            </div>
+            </div> 
         </main>
     );
 }

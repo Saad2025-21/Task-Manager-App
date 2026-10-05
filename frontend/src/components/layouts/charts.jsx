@@ -20,7 +20,7 @@ export  function Stats({ stats }) {
 
  export  function TaskDistributionChart({ data }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div className="bg-surface rounded-2xl shadow-sm border border-gray-100 p-6">
       <h2 className="text-lg font-semibold text-gray-800 mb-8 mt-4">Task Distribution</h2>
       <ResponsiveContainer width="100%" height={260}>
         <PieChart>
@@ -57,7 +57,7 @@ export  function Stats({ stats }) {
 
 export  function TaskPriorityChart({ data }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div className="bg-surface rounded-2xl shadow-sm border border-gray-100 p-6">
       <h2 className="text-lg font-semibold text-gray-800 mb-16 mt-4 ">Task Priority Levels</h2>
       <ResponsiveContainer width="100%" height={260}>
         <BarChart data={data} barSize={60}>

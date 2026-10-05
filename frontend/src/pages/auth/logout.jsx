@@ -2,21 +2,18 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LogoutPage = () => {
-  const [showModal, setShowModal] = useState(true); 
+  const [showModal, setShowModal] = useState(true);
   const navigate = useNavigate();
 
   const handleLogout = () => {
-   
     localStorage.removeItem("token");
     localStorage.removeItem("user");
 
-   
     navigate("/");
   };
 
   const handleCancel = () => {
-   
-    navigate("/admin/dashboard"); 
+    navigate("/admin/dashboard");
   };
 
   return (

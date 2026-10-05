@@ -1,1 +1,158 @@
 @import "tailwindcss";
+
+/* ==========================================================
+   Tailwind v4 theme (CSS-first). This single file replaces
+   both tailwind.config.js and design-tokens.css.
+   Values are estimated from the reference screenshots.
+   ========================================================== */
+
+@theme {
+  /* ---------- Colors ---------- */
+  /* Brand (indigo, from gradient #5). Use as: bg-brand-600, text-brand-600, ring-brand-500 ... */
+  --color-brand-50: #ecebfa;
+  --color-brand-100: #d8d6f4;
+  --color-brand-200: #b0ade8;
+  --color-brand-300: #8c88d6;
+  --color-brand-500: #3a35b5;
+  --color-brand-600: #2e30a8; /* solid fallback for icons, rings, links */
+  --color-brand-700: #241e8a;
+  --color-brand-900: #170f5a;
+
+  /* Charts: bg-chart-1, fill-chart-2 ... */
+  --color-chart-1: #1843b8;
+  --color-chart-2: #6d5fe0;
+  --color-chart-3: #4a1799;
+
+  /* Neutrals */
+  --color-page: #fffff;
+  --color-surface: hsl(0 0% 95% / 1);
+  --color-line: #e8e8e2;
+  --color-line-soft: #efefea;
+  --color-ink: #1a1a17;
+  --color-ink-muted: #6b6b65;
+  --color-ink-faint: #9a9a93;
+  --color-kbd: #ecebfa;
+
+  /* Semantic */
+  --color-danger: #e10600;
+  --color-danger-soft: #fdecea;
+
+  /* ---------- Font ---------- */
+  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* ---------- Font sizes (text-title, text-stat, ...) ---------- */
+  --text-title: 36px;
+  --text-title--line-height: 1.1;
+  --text-title--font-weight: 700;
+
+  --text-stat: 36px;
+  --text-stat--line-height: 1;
+  --text-stat--font-weight: 700;
+
+  --text-heading: 20px;
+  --text-heading--line-height: 1.3;
+  --text-heading--font-weight: 600;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+
+  --text-small: 14px;
+  --text-small--line-height: 1.4;
+
+  --text-tiny: 12px;
+  --text-tiny--line-height: 1.3;
+  --text-tiny--letter-spacing: 0.06em;
+
+  /* ---------- Radius (rounded-sm ... rounded-pill) ---------- */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
+  --radius-pill: 9999px;
+
+  /* ---------- Shadows (shadow-card, shadow-modal, shadow-active) ---------- */
+  --shadow-card:
+    0 1px 2px rgba(20, 20, 15, 0.04), 0 4px 16px rgba(20, 20, 15, 0.04);
+  --shadow-modal: 0 20px 60px -12px rgba(20, 20, 15, 0.25);
+  --shadow-active: 0 8px 20px -6px rgba(46, 48, 168, 0.45);
+
+  /* ---------- Named spacing (h-nav, w-sidebar, p-card, gap-grid ...) ---------- */
+  --spacing-sidebar: 290px;
+  --spacing-topbar: 44px;
+  --spacing-content: 24px;
+  --spacing-card: 24px;
+  --spacing-grid: 16px;
+  --spacing-nav: 44px;
+}
+
+/* ---------- Gradients ----------
+   v4 has no "background-image" theme namespace, so the gradient lives in a
+   plain variable and a custom utility exposes it as a class. */
+:root {
+  --gradient-brand: linear-gradient(135deg, #1843b8 0%, #4a1799 100%);
+  --gradient-brand-vertical: linear-gradient(180deg, #1843b8 0%, #4a1799 100%);
+
+  /* All 7 gradients from the reference. To switch the brand look, point
+     --gradient-brand at one of these (and update the --color-brand-* shades). */
+  --gradient-1-amber: linear-gradient(
+    135deg,
+    #ffc800 0%,
+    #ff8a00 50%,
+    #c93c00 100%
+  );
+  --gradient-2-pink: linear-gradient(
+    135deg,
+    #f944b8 0%,
+    #8a2a8c 55%,
+    #200e55 100%
+  );
+  --gradient-3-coral: linear-gradient(
+    135deg,
+    #ec4a5f 0%,
+    #e9495d 40%,
+    #5b2a9a 100%
+  );
+  --gradient-4-teal: linear-gradient(135deg, #0897cb 0%, #172670 100%);
+  --gradient-5-indigo: linear-gradient(135deg, #1843b8 0%, #4a1799 100%);
+  --gradient-6-sky: linear-gradient(135deg, #03a6ff 0%, #0040a5 100%);
+  --gradient-7-red: linear-gradient(
+    135deg,
+    #f03030 0%,
+    #d00a0a 50%,
+    #7a0000 100%
+  );
+}
+
+@utility bg-brand-gradient {
+  background-image: var(--gradient-brand);
+}
+
+@utility bg-brand-gradient-v {
+  background-image: var(--gradient-brand-vertical);
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background: #e6e6e6; /* grey page */
+    display: flex;
+    justify-content: center; /* centers horizontally */
+    align-items: center; /* centers vertically */
+  }
+}
+.display {
+  background: #fff;
+  width: 95vw;
+  height: 95vh;               /* box stays inside the screen, so no scroll */
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+  display: flex;
+  gap: 15px;
+}

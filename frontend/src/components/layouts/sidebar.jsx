@@ -1,77 +1,153 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FiMenu, FiX, FiGrid, FiCheckSquare, FiPlusCircle, FiLogOut } from "react-icons/fi";
+import {
+  FiMenu,
+  FiX,
+  FiGrid,
+  FiCheckSquare,
+  FiPlusCircle,
+  FiLogOut,
+} from "react-icons/fi";
 
-export default function Sidebar() {
-    const [isOpen, setIsOpen] = useState(false);
+// "bar"  = left accent bar + bold label + colored icon (matches the Donezo reference)
+// "pill" = filled gradient pill (matches the Tasko reference)
+const ACTIVE_STYLE = "bar";
 
-    
-    const navItems = [
-        { label: "Dashboard", icon: <FiGrid />, path: "/admin/dashboard" },
-        { label: "Manage Tasks", icon: <FiCheckSquare />, path: "/admin/tasks" },
-        { label: "Create Task", icon: <FiPlusCircle />, path: "/admin/create-task" },
-        { label: "Logout", icon: <FiLogOut />, path: "/logout" },
-    ];
+// taskCount is optional: pass the real number from your app, e.g. <Sidebar taskCount={tasks.length} />
+export default function Sidebar({ taskCount = 6 }) {
+  const [isOpen, setIsOpen] = useState(false);
 
-    const toggleSidebar = () => setIsOpen(!isOpen);
+  // Same items and paths as before; "section" and "showBadge" are new, for grouping and the count badge.
+  const navItems = [
+    {
+      label: "Dashboard",
+      icon: <FiGrid />,
+      path: "/admin/dashboard",
+      section: "MENU",
+    },
+    {
+      label: "Tasks",
+      icon: <FiCheckSquare />,
+      path: "/admin/tasks",
+      section: "MENU",
+      showBadge: true,
+    },
+    {
+      label: "Create Task",
+      icon: <FiPlusCircle />,
+      path: "/admin/create-task",
+      section: "MENU",
+    },
+    {
+      label: "Logout",
+      icon: <FiLogOut />,
+      path: "/logout",
+      section: "GENERAL",
+    },
+  ];
 
-    return (
-        <>
-            {/* --- Mobile Hamburger Button --- */}
-            <button 
-                onClick={toggleSidebar}
-                className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md border border-gray-100 text-gray-600 hover:text-blue-600 transition-colors"
-                aria-label="Toggle Menu"
-            >
-                {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </button>
+  const sections = ["MENU", "GENERAL"];
 
-            {/* --- Mobile Overlay  --- */}
-            {isOpen && (
-                <div 
-                    className="fixed inset-0 bg-gray-900/40 backdrop-blur-sm z-40 lg:hidden"
-                    onClick={toggleSidebar}
-                />
-            )}
+  const toggleSidebar = () => setIsOpen(!isOpen);
 
-            {/* --- Sidebar Container --- */}
-            <aside className={`
-                fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-100 flex flex-col py-8 px-4 gap-2 shadow-xl transition-transform duration-300 ease-in-out
-                lg:translate-x-0 lg:static lg:w-56 lg:shadow-sm
+  const isBar = ACTIVE_STYLE === "bar";
+
+  return (
+    <>
+      {/* --- Mobile Hamburger Button --- */}
+      <button
+        onClick={toggleSidebar}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-surface shadow-card border border-line text-ink-muted hover:text-brand-600 transition-colors"
+        aria-label="Toggle Menu"
+      >
+        {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+      </button>
+
+      {/* --- Mobile Overlay  --- */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+
+      {/* --- Sidebar Container --- */}
+      <aside
+        className={`
+                 fixed inset-y-3 left-3 z-40 flex w-55 shrink-0 flex-col rounded-2xl bg-neutral-100 px-4 pb-4 pt-6 shadow-xl
+        transition-transform duration-300 ease-in-out
+        lg:static lg:inset-auto lg:h-full lg:shrink-0 lg:translate-x-0 lg:shadow-none
                 ${isOpen ? "translate-x-0" : "-translate-x-full"}
-            `}>
-                
-                {/* Branding Section */}
-                <div className="flex flex-col items-start mb-20 mt-8 px-2">
-                    <h1 className="text-xl font-extrabold uppercase bg-linear-to-br from-violet-600 to-cyan-500 bg-clip-text text-transparent tracking-wider">
-                        TaskManager
-                    </h1>
-                    <span className="text-gray-400 text-xs font-semibold mt-1 tracking-tight">
-                        EFFICIENT WORKFLOW
+            `}
+      >
+        {/* Branding Section */}
+                <div className="flex items-center gap-3 px-0 mt-10 lg:mt-0 mb-6">
+                    <span className="grid place-items-center size-[2rem] rounded-pill bg-brand-gradient shrink-0">
+                        <svg viewBox="0 0 24 24" className="size-6 text-white" fill="currentColor" aria-hidden="true">
+                            <ellipse cx="8.3" cy="10" rx="2.3" ry="3" />
+                            <ellipse cx="15.7" cy="10" rx="2.3" ry="3" />
+                            <path d="M9 16.2c.9.7 1.9 1 3 1s2.1-.3 3-1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+                        </svg>
                     </span>
+                    <h1 className="text-[1rem] font-medium text-ink pl-[5px]">TaskManager</h1>
                 </div>
 
-                {/* Navigation Links */}
-                <nav className="flex flex-col gap-8">
-                    {navItems.map((item) => (
-                        <NavLink
-                            key={item.label}
-                            to={item.path}
-                            onClick={() => setIsOpen(false)} 
-                            className={({ isActive }) =>
-                                `flex items-center gap-8 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200
-                                ${isActive
-                                    ? "text-blue-600 bg-blue-50 border-l-4 border-blue-500 shadow-sm"
-                                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                                }`
-                            }
-                        >
-                            <span className="text-lg">{item.icon}</span>
-                            {item.label}
-                        </NavLink>
+        {/* Navigation Links, grouped by section */}
+        <nav className="flex flex-col gap-5">
+                    {sections.map((section) => (
+                        <div key={section}>
+                            <p className="px-0 mb-2 text-tiny uppercase font-medium text-ink-muted">
+                                {section}
+                            </p>
+
+                            <div className="flex flex-col gap-0.5">
+                                {navItems
+                                    .filter((item) => item.section === section)
+                                    .map((item) => (
+                                        <NavLink
+                                            key={item.label}
+                                            to={item.path}
+                                            onClick={() => setIsOpen(false)}
+                                            className={({ isActive }) =>
+                                                `relative flex items-center gap-[2rem] px-3.5 h-nav text-body transition-all duration-200
+                                                ${isBar ? "rounded-md" : "rounded-pill"}
+                                                ${isActive
+                                                    ? isBar
+                                                        ? "text-ink font-semibold"
+                                                        : "bg-brand-gradient text-white font-semibold shadow-active"
+                                                    : "font-medium text-ink-muted hover:bg-brand-50 hover:text-ink"
+                                                }`
+                                            }
+                                        >
+                                            {({ isActive }) => (
+                                                <>
+                                                    {isBar && isActive && (
+                                                        <span className="absolute -left-4 top-1 bottom-1 w-1 rounded-r-pill bg-brand-gradient-v" />
+                                                    )}
+
+                                                    <span className={`text-lg shrink-0 ${isBar && isActive ? "text-brand-600" : ""}`}>
+                                                        {item.icon}
+                                                    </span>
+                                                    <span className="flex-1">{item.label}</span>
+
+                                                    {item.showBadge && (
+                                                        <span
+                                                            className={`min-w-6 px-2 py-0.5 text-tiny font-bold text-center text-white
+                                                            ${isBar ? "rounded-sm bg-brand-700" : "rounded-pill"}
+                                                            ${!isBar && (isActive ? "bg-white/25" : "bg-brand-300")}`}
+                                                        >
+                                                            {taskCount}
+                                                        </span>
+                                                    )}
+                                                </>
+                                            )}
+                                        </NavLink>
+                                    ))}
+                            </div>
+                        </div>
                     ))}
                 </nav>
-            </aside>
-        </>
-    );
+      </aside>
+    </>
+  );
 }
