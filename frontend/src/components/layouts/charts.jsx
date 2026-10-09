@@ -1,82 +1,130 @@
-import { PieChart, Pie, ResponsiveContainer, Tooltip } from "recharts";
-import { BarChart, Bar, XAxis, YAxis} from "recharts";
-import { Cell } from "recharts";
+import {
+    ResponsiveContainer,
+    PieChart,
+    Pie,
+    Cell,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid,
+    Tooltip,
+} from "recharts";
 
-export  function Stats({ stats }) {
-  return (
-    <div className="flex flex-wrap gap-6 mt-[3rem]">
-      {stats.map((stat) => (
-        <div key={stat.label} className="flex items-center gap-2">
-          <div className="w-1.5 h-5 rounded-full" style={{ backgroundColor: stat.color }} />
-          <span className="text-gray-800 font-bold text-[22px]">{stat.value}</span>
-          <span className="text-gray-400 text-[13px]">{stat.label}</span>
+const INK = "#1a1a17";
+const INK_MUTED = "#6b6b65";
+const LINE = "#e8e8e2";
+
+/* ---------- Stats (kept for compatibility; the dashboard now renders its own cards) ---------- */
+export function Stats({ stats }) {
+    return (
+        <div className="flex flex-wrap gap-6">
+            {stats.map((s) => (
+                <div key={s.label} className="flex items-center gap-2">
+                    <span className="h-5 w-1.5 rounded-pill" style={{ backgroundColor: s.color }} />
+                    <span className="text-heading font-bold text-ink">{s.value}</span>
+                    <span className="text-small text-ink-muted">{s.label}</span>
+                </div>
+            ))}
         </div>
-      ))}
-    </div>
-  );
+    );
 }
 
-
-
- export  function TaskDistributionChart({ data }) {
-  return (
-    <div className="bg-surface rounded-2xl shadow-sm border border-gray-100 p-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-8 mt-4">Task Distribution</h2>
-      <ResponsiveContainer width="100%" height={260}>
-        <PieChart>
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            innerRadius={80}
-            outerRadius={120}
-            paddingAngle={2}
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell key={index} fill={entry.color} />
+/* ---------- Shared legend ---------- */
+function Legend({ items }) {
+    return (
+        <ul className="shrink-0 flex flex-wrap justify-center gap-x-5 gap-y-1 pt-2">
+            {items.map((d) => (
+                <li key={d.name} className="flex items-center gap-2 text-small text-ink-muted">
+                    <span className="h-2.5 w-2.5 rounded-pill" style={{ backgroundColor: d.color }} />
+                    {d.name}
+                    <span className="font-semibold text-ink">{d.value}</span>
+                </li>
             ))}
-          </Pie>
-          <Tooltip formatter={(value, name) => [value, name]} />
-        </PieChart>
-      </ResponsiveContainer>
-      {/* Legend */}
-      <div className="flex justify-center gap-6 mt-12">
-        {data.map((item) => (
-          <div key={item.name} className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-            <span className="text-gray-500 text-sm">{item.name}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+        </ul>
+    );
 }
 
+/* ---------- Task distribution (donut) ---------- */
+export function TaskDistributionChart({ data }) {
+    const total = data.reduce((sum, d) => sum + (Number(d.value) || 0), 0);
 
+    return (
+        <div className="flex flex-col h-full min-h-0">
+            <h2 className="shrink-0 text-heading text-ink">Task Distribution</h2>
 
-export  function TaskPriorityChart({ data }) {
-  return (
-    <div className="bg-surface rounded-2xl shadow-sm border border-gray-100 p-6">
-      <h2 className="text-lg font-semibold text-gray-800 mb-16 mt-4 ">Task Priority Levels</h2>
-      <ResponsiveContainer width="100%" height={260}>
-        <BarChart data={data} barSize={60}>
-          <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fill: "#9CA3AF", fontSize: 13 }} />
-          <YAxis
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "#9CA3AF", fontSize: 12 }}
-            ticks={[0, 2, 4, 6, 8]}
-          />
-          <Tooltip cursor={{ fill: "rgba(0,0,0,0.04)" }} />
-          <Bar dataKey="value" radius={[6, 6, 0, 0]}>
-            {data.map((entry, index) => (
-              <Cell key={index} fill={entry.color} />
-            ))}
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
-  );
+            {/* flex-1 + absolute inner box = chart always fits the card, never clipped */}
+            <div className="relative flex-1 min-h-0">
+                <div className="absolute inset-0">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <PieChart>
+                            <Pie
+                                data={data}
+                                dataKey="value"
+                                nameKey="name"
+                                innerRadius="62%"
+                                outerRadius="92%"
+                                paddingAngle={2}
+                                stroke="none"
+                            >
+                                {data.map((d) => (
+                                    <Cell key={d.name} fill={d.color} />
+                                ))}
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
+                    </ResponsiveContainer>
+                </div>
+
+                {/* total in the middle of the donut */}
+                <div className="absolute inset-0 grid place-items-center pointer-events-none">
+                    <div className="text-center leading-tight">
+                        <p className="text-stat text-ink">{total}</p>
+                        <p className="text-tiny text-ink-muted">Total</p>
+                    </div>
+                </div>
+            </div>
+
+            <Legend items={data} />
+        </div>
+    );
 }
 
+/* ---------- Task priority levels (bars) ---------- */
+export function TaskPriorityChart({ data }) {
+    return (
+        <div className="flex flex-col h-full min-h-0">
+            <h2 className="shrink-0 text-heading text-ink">Task Priority Levels</h2>
+
+            <div className="relative flex-1 min-h-0 mt-2">
+                <div className="absolute inset-0">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: -16 }}>
+                            <CartesianGrid vertical={false} stroke={LINE} strokeDasharray="3 3" />
+                            <XAxis
+                                dataKey="name"
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fill: INK_MUTED, fontSize: 12 }}
+                            />
+                            <YAxis
+                                allowDecimals={false}
+                                axisLine={false}
+                                tickLine={false}
+                                tick={{ fill: INK_MUTED, fontSize: 12 }}
+                            />
+                            <Tooltip cursor={{ fill: "rgba(20,113,78,0.08)" }} />
+                            <Bar dataKey="value" radius={[8, 8, 0, 0]} maxBarSize={56}>
+                                {data.map((d) => (
+                                    <Cell key={d.name} fill={d.color} />
+                                ))}
+                            </Bar>
+                        </BarChart>
+                    </ResponsiveContainer>
+                </div>
+            </div>
+
+            <Legend items={data} />
+        </div>
+    );
+}

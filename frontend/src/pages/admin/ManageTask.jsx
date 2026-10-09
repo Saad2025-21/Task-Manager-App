@@ -1,73 +1,13 @@
-import React, { useState, useEffect } from "react";
 import Sidebar from "../../components/layouts/sidebar";
-import TaskCard from "../../components/layouts/Taskcard";
-import FilterTabs from "../../components/layouts/filtertab";
-import axiosInstance from "../../utilis/axiosinstance";
-import { API_PATHS } from "../../utilis/apipath";
-import { TbLoader3 } from "react-icons/tb";
-import Topbar from "../../components/layouts/Topbar"
-const ManageTask = () => {
-  const [tasks, setTasks] = useState([]);   
-  const [activeFilter, setActiveFilter] = useState("All");
+import TaskBoard from "../../components/layouts/TaskBoard";
 
-  useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-        const res = await axiosInstance.get(API_PATHS.TASKS.GET_DASHBOARD_DATA);
-        setTasks(res.data.recentTask || []);  
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-        setTasks([]);                       
-      }
-    };
-    fetchTasks();
-  }, []);
-
-  const filters = [
-  { label: "All", count: tasks.length },
-  { label: "pending", count: tasks.filter((t) => t.status === "pending").length },
-  { label: "in-progress", count: tasks.filter((t) => t.status === "in-progress").length },
-  { label: "completed", count: tasks.filter((t) => t.status === "completed").length },
-];
-
-
-  const filteredTasks = tasks.filter((t) =>
-    activeFilter === "All" ? true : t.status === activeFilter
-  );
-
+export default function ManageTasks() {
   return (
     <div className="display">
       <Sidebar />
-      <div className="flex flex-col flex-1 min-w-0 gap-2">
-        <Topbar />
-        <div className="flex-1 min-h-0 overflow-auto">
-         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-start gap-4 mb-20">
-          <div className="flex flex-wrap items-center gap-3">
-            <FilterTabs
-              filters={filters}
-              activeFilter={activeFilter}
-              setActiveFilter={setActiveFilter}
-            />
-          </div>
-        </div>
-
-        {/* Task Grid */}
-        {filteredTasks.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20">
-            {filteredTasks.map((task) => (
-              <TaskCard key={task._id} task={task} />
-            ))}
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center py-24 text-gray-400">
-            <TbLoader3 className="animate-spin relative top-7" size={70}/>
-          </div>
-        )}
-        </div>
-      </div>
+      <main className="content-glow flex min-w-0 flex-1 flex-col overflow-hidden">
+        <TaskBoard role="admin" />
+      </main>
     </div>
   );
-};
-
-export default ManageTask;
+}

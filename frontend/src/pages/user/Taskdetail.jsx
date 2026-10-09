@@ -1,16 +1,12 @@
-import React from "react";
 import Sidebar from "../../components/layouts/sidebar";
-import Taskdetail from "../../components/layouts/taskdetail";
-import Topbar from "../../components/layouts/Topbar";
-export default function Taskdetailpg() {
+import TaskDetailLayout from "../../components/layouts/taskdetail";
+
+export default function TaskDetailPage() {
   return (
     <div className="display">
       <Sidebar />
-      <div className="flex flex-col flex-1 min-w-0 gap-2">
-        <Topbar />
-        <div className="flex-1 min-h-0 overflow-auto">
-          <Taskdetail/>
-        </div>
+      <div className="content-glow min-w-0 flex-1 overflow-y-auto">
+        <TaskDetailLayout />
       </div>
     </div>
   );

@@ -1,113 +1,88 @@
-import { useNavigate } from "react-router-dom";
-export default function TaskCard({ task }) {
-const navigate = useNavigate()
+import React from "react";
 
-  const totalTask = task.todochecklist?.length || 0;
-  const pendingTask = task.todochecklist?.filter(item => !item.completed).length || 0;
-  const progress = totalTask > 0 ? ((totalTask - pendingTask) / totalTask) * 100 : 0;
+// Status: three brand hues (same as the dashboard charts)
+const STATUS_STYLES = {
+  pending: "bg-chart-2/10 text-chart-2",
+  "in-progress": "bg-chart-1/10 text-chart-1",
+  completed: "bg-chart-3/10 text-chart-3",
+};
 
+// Priority: one hue, light -> dark = low -> high
+const PRIORITY_STYLES = {
+  low: "bg-brand-100 text-brand-600",
+  medium: "bg-brand-300/40 text-brand-700",
+  high: "bg-brand-900 text-white",
+};
 
-  const statusStyles = {
-    pending: {
-      text: "text-red-600",
-      bg: "bg-red-50",
-      border: "border-red-200",
-      dot: "bg-red-500",
-    },
-    'in-progress': {
-      text: "text-orange-600",
-      bg: "bg-orange-50",
-      border: "border-orange-200",
-      dot: "bg-orange-500",
-    },
-    completed: {
-      text: "text-green-600",
-      bg: "bg-green-50",
-      border: "border-green-200",
-      dot: "bg-green-500",
-    },
-  };
+const Badge = ({ className = "", children }) => (
+  <span
+    className={
+      "inline-flex items-center gap-1.5 rounded-pill px-2.5 py-0.5 text-tiny font-medium whitespace-nowrap " +
+      className
+    }
+  >
+    <span className="h-1.5 w-1.5 rounded-pill bg-current" />
+    {children}
+  </span>
+);
 
-  const priorityStyles = {
-    High: {
-      text: "text-red-600",
-      bg: "bg-red-50",
-      border: "border-red-200",
-      dot: "bg-red-500",
-    },
-    Medium: {
-      text: "text-orange-600",
-      bg: "bg-orange-50",
-      border: "border-orange-200",
-      dot: "bg-orange-500",
-    },
-    low: {
-      text: "text-green-600",
-      bg: "bg-green-50",
-      border: "border-green-200",
-      dot: "bg-green-500",
-    },
-  };
+const TaskCard = ({ task }) => {
+  // NOTE: adjust these two lines if your task object names its checklist differently.
+  const rawList = task.todochecklist ?? task.todoChecklist;
+  const checklist = Array.isArray(rawList) ? rawList : null;
+  const total = checklist ? checklist.length : (task.totalTodos ?? 0);
+  const done = checklist
+    ? checklist.filter((t) => t.completed).length
+    : (task.completedTodoCount ?? 0);
+  const percent = total > 0 ? Math.round((done / total) * 100) : 0;
 
-  const styles = statusStyles[task.status] || statusStyles.pending;
-  const pri_styles = priorityStyles[task.priority] || priorityStyles.High;
+  const statusStyle = STATUS_STYLES[task.status] || STATUS_STYLES.pending;
+  const priorityStyle =
+    PRIORITY_STYLES[String(task.priority || "").toLowerCase()] ||
+    PRIORITY_STYLES.low;
+
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 w-75"
-    onClick={()=>{
-      console.log('task._id:', task._id, typeof task._id);
-      navigate(`/admin/taskdetail/${task._id}`) 
-    }}>
-      {/* Header */}
-      <div className="flex items-start justify-between mb-12">
-        <h2 className="text-lg font-bold text-gray-900 leading-tight">
-          {task.title}
-        </h2>
-        <div>
-          <span
-            className={`ml-3 mt-0.5 mb-1.5 inline-flex items-center gap-1 text-xs font-medium 
-        ${styles.text} ${styles.bg} ${styles.border} rounded-full px-2.5 py-1 whitespace-nowrap`}
-          >
-            <span className={`w-1.5 h-1.5 rounded-full ${styles.dot} inline-block`}></span>
-            {task.status}
-          </span>
-          <span
-            className={`ml-3 mt-0.5 mb-1.5 inline-flex items-center gap-1 text-xs font-medium 
-        ${pri_styles.text} ${pri_styles.bg} ${pri_styles.border} rounded-full px-2.5 py-1 whitespace-nowrap`}
-          >
-            <span className={`w-1.5 h-1.5 rounded-full ${pri_styles.dot} inline-block`}></span>
-            {task.priority}
-          </span>
+    <article className="h-full flex flex-col gap-3 p-5 min-w-0 border-none">
+      {/* Title + badges */}
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-heading text-ink truncate">{task.title}</h3>
+        <div className="flex flex-wrap justify-end gap-2 shrink-0">
+          <Badge className={statusStyle}>{task.status}</Badge>
+          <Badge className={priorityStyle}>{task.priority}</Badge>
         </div>
-
       </div>
 
       {/* Description */}
-      <p className="text-sm text-gray-500 mb-4 leading-snug">
+      <p className="text-small text-ink-muted line-clamp-2 min-h-[2.8em]">
         {task.description}
       </p>
 
+      {/* Progress */}
+      <div className="mt-auto">
+        <div className="flex items-center justify-between text-small">
+          <span className="text-ink-muted">Task done</span>
+          <span className="font-semibold text-brand-600">{percent}%</span>
+        </div>
 
-
-      <span className="mb-2.5">Task done:</span>
-
-      {/* Progress Bar */}
-      <div className="w-full bg-gray-100 rounded-full h-2 mb-4 mt-2 overflow-hidden">
         <div
-          className="h-2 rounded-full bg-blue-400 transition-all duration-500"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+          className="mt-2 h-2 w-full rounded-pill bg-brand-100 overflow-hidden"
+          role="progressbar"
+          aria-valuenow={percent}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <div
+            className="h-full rounded-pill bg-brand-gradient transition-[width] duration-500"
+            style={{ width: `${percent}%` }}
+          />
+        </div>
 
-      {/* Footer */}
-      <div className="flex items-center justify-between text-sm">
-        <span className="text-gray-800 font-medium">
-          <span className="font-bold">{totalTask - pendingTask}</span>
-          <span className="text-gray-400">/{totalTask}</span>
-        </span>
-        <span className="font-semibold text-gray-700">
-          {Math.round(progress)}%
-        </span>
+        <p className="mt-2 text-small text-ink-muted">
+          <span className="font-semibold text-ink">{done}</span>/{total} tasks
+        </p>
       </div>
-    </div>
+    </article>
   );
-}
+};
+
+export default TaskCard;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import "./index.css"
@@ -8,11 +7,12 @@ import Logout from './pages/auth/logout'
 
 import Dashboard from './pages/admin/Dashboard';
 import ManageTasks from './pages/admin/ManageTask';
-
+import ManageUsers from './pages/admin/ManageUsers';
 import CreateTask from './pages/admin/CreateTask';
 import UserDashboard from './pages/user/UserDashboard';
 import Mytask from './pages/user/Mytask';
 import Taskdetail from './pages/user/Taskdetail';
+import Profile from './pages/Profile';
 
 import PrivateRoute from './routes/PrivateRoute';
 
@@ -32,6 +32,7 @@ const App = () => {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/tasks" element={<ManageTasks />} />
             <Route path="/admin/create-task" element={<CreateTask />} />
+            <Route path="/admin/users" element={<ManageUsers />} />
             <Route path="/admin/taskdetail/:id" element={<Taskdetail />} />
           </Route>
 
@@ -41,6 +42,10 @@ const App = () => {
             <Route path="/user/tasks" element={<Mytask />} />
             <Route path="/user/taskdetail/:id" element={<Taskdetail />} />
           </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
+          <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>
     </div>

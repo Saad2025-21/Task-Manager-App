@@ -7,13 +7,14 @@ const LogoutPage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
     localStorage.removeItem("user");
 
     navigate("/");
   };
 
   const handleCancel = () => {
-    navigate("/admin/dashboard");
+    navigate(localStorage.getItem("role") === "admin" ? "/admin/dashboard" : "/user/dashboard");
   };
 
   return (

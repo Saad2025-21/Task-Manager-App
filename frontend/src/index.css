@@ -8,30 +8,30 @@
 
 @theme {
   /* ---------- Colors ---------- */
-  /* Brand (indigo, from gradient #5). Use as: bg-brand-600, text-brand-600, ring-brand-500 ... */
-  --color-brand-50: #ecebfa;
-  --color-brand-100: #d8d6f4;
-  --color-brand-200: #b0ade8;
-  --color-brand-300: #8c88d6;
-  --color-brand-500: #3a35b5;
-  --color-brand-600: #2e30a8; /* solid fallback for icons, rings, links */
-  --color-brand-700: #241e8a;
-  --color-brand-900: #170f5a;
+  /* Brand greens: pale surfaces, soft accents, and deep primary actions. */
+  --color-brand-50: #f2f8f5;
+  --color-brand-100: #e4f0e9;
+  --color-brand-200: #c8e2d4;
+  --color-brand-300: #9bcab1;
+  --color-brand-500: #27865f;
+  --color-brand-600: #14714e;
+  --color-brand-700: #0d5b3f;
+  --color-brand-900: #123d2e;
 
   /* Charts: bg-chart-1, fill-chart-2 ... */
-  --color-chart-1: #1843b8;
-  --color-chart-2: #6d5fe0;
-  --color-chart-3: #4a1799;
+  --color-chart-1: #65b88e;
+  --color-chart-2: #21805a;
+  --color-chart-3: #124b37;
 
   /* Neutrals */
-  --color-page: #fffff;
+  --color-page: #f5f7f5;
   --color-surface: hsl(0 0% 95% / 1);
   --color-line: #e8e8e2;
   --color-line-soft: #efefea;
   --color-ink: #1a1a17;
   --color-ink-muted: #6b6b65;
   --color-ink-faint: #9a9a93;
-  --color-kbd: #ecebfa;
+  --color-kbd: #edf4ef;
 
   /* Semantic */
   --color-danger: #e10600;
@@ -74,7 +74,7 @@
   --shadow-card:
     0 1px 2px rgba(20, 20, 15, 0.04), 0 4px 16px rgba(20, 20, 15, 0.04);
   --shadow-modal: 0 20px 60px -12px rgba(20, 20, 15, 0.25);
-  --shadow-active: 0 8px 20px -6px rgba(46, 48, 168, 0.45);
+  --shadow-active: 0 5px 14px -6px rgba(18, 61, 46, 0.28);
 
   /* ---------- Named spacing (h-nav, w-sidebar, p-card, gap-grid ...) ---------- */
   --spacing-sidebar: 290px;
@@ -89,8 +89,8 @@
    v4 has no "background-image" theme namespace, so the gradient lives in a
    plain variable and a custom utility exposes it as a class. */
 :root {
-  --gradient-brand: linear-gradient(135deg, #1843b8 0%, #4a1799 100%);
-  --gradient-brand-vertical: linear-gradient(180deg, #1843b8 0%, #4a1799 100%);
+  --gradient-brand: linear-gradient(135deg, #21805a 0%, #0d5b3f 100%);
+  --gradient-brand-vertical: linear-gradient(180deg, #21805a 0%, #0d5b3f 100%);
 
   /* All 7 gradients from the reference. To switch the brand look, point
      --gradient-brand at one of these (and update the --color-brand-* shades). */
@@ -113,7 +113,7 @@
     #5b2a9a 100%
   );
   --gradient-4-teal: linear-gradient(135deg, #0897cb 0%, #172670 100%);
-  --gradient-5-indigo: linear-gradient(135deg, #1843b8 0%, #4a1799 100%);
+  --gradient-5-indigo: linear-gradient(135deg, #21805a 0%, #0d5b3f 100%);
   --gradient-6-sky: linear-gradient(135deg, #03a6ff 0%, #0040a5 100%);
   --gradient-7-red: linear-gradient(
     135deg,
@@ -140,19 +140,46 @@
   }
 
   body {
-    background: #e6e6e6; /* grey page */
+    background: #f1f4f2;
     display: flex;
-    justify-content: center; /* centers horizontally */
-    align-items: center; /* centers vertically */
+    justify-content: center;
+    align-items: flex-start;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    overflow: hidden;
   }
 }
 .display {
   background: #fff;
-  width: 95vw;
-  height: 95vh;               /* box stays inside the screen, so no scroll */
+  width: min(1440px, calc(100vw - 32px));
+  height: calc(100vh - 32px);
+  min-height: 620px;
+  margin: 16px auto;
   border-radius: 24px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   padding: 20px;
   display: flex;
   gap: 15px;
+}
+
+.content-glow {
+  background:radial-gradient(ellipse 78% 82% at 50% 50%, rgb(39 134 95 / 10%) 0%, rgb(39 134 95 / 5%) 52%, transparent 100%);
+  border-radius: 30px;
+  padding: 15px;
+}
+
+@media (max-width: 1023px) {
+  .display {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    margin: 0;
+    padding: 12px;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .display { padding: 10px; }
+  .content-glow { padding: 12px; }
 }

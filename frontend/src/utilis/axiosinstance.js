@@ -34,4 +34,19 @@ axiosInstance.interceptors.request.use(
 
 )
 
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401 && localStorage.getItem("token")) {
+            localStorage.removeItem("token")
+            localStorage.removeItem("role")
+            localStorage.removeItem("user")
+            if (window.location.pathname !== "/" && window.location.pathname !== "/signup") {
+                window.location.href = "/"
+            }
+        }
+        return Promise.reject(error)
+    }
+)
+
 export default axiosInstance;

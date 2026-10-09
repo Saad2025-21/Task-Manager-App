@@ -7,6 +7,8 @@ import {
   FiCheckSquare,
   FiPlusCircle,
   FiLogOut,
+  FiUsers,
+  FiUser,
 } from "react-icons/fi";
 
 // "bar"  = left accent bar + bold label + colored icon (matches the Donezo reference)
@@ -14,36 +16,22 @@ import {
 const ACTIVE_STYLE = "bar";
 
 // taskCount is optional: pass the real number from your app, e.g. <Sidebar taskCount={tasks.length} />
-export default function Sidebar({ taskCount = 6 }) {
+export default function Sidebar({ taskCount = 0 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const role = localStorage.getItem("role") || "admin";
 
-  // Same items and paths as before; "section" and "showBadge" are new, for grouping and the count badge.
+  const root = role === "admin" ? "/admin" : "/user";
   const navItems = [
-    {
-      label: "Dashboard",
-      icon: <FiGrid />,
-      path: "/admin/dashboard",
-      section: "MENU",
-    },
-    {
-      label: "Tasks",
-      icon: <FiCheckSquare />,
-      path: "/admin/tasks",
-      section: "MENU",
-      showBadge: true,
-    },
-    {
-      label: "Create Task",
-      icon: <FiPlusCircle />,
-      path: "/admin/create-task",
-      section: "MENU",
-    },
-    {
-      label: "Logout",
-      icon: <FiLogOut />,
-      path: "/logout",
-      section: "GENERAL",
-    },
+    { label: "Dashboard", icon: <FiGrid />, path: `${root}/dashboard`, section: "MENU" },
+    { label: "My tasks", icon: <FiCheckSquare />, path: `${root}/tasks`, section: "MENU", showBadge: true },
+    ...(role === "admin"
+      ? [
+          { label: "Create task", icon: <FiPlusCircle />, path: "/admin/create-task", section: "MENU" },
+          { label: "People", icon: <FiUsers />, path: "/admin/users", section: "MENU" },
+        ]
+      : []),
+    { label: "Profile", icon: <FiUser />, path: "/profile", section: "GENERAL" },
+    { label: "Logout", icon: <FiLogOut />, path: "/logout", section: "GENERAL" },
   ];
 
   const sections = ["MENU", "GENERAL"];
@@ -74,14 +62,14 @@ export default function Sidebar({ taskCount = 6 }) {
       {/* --- Sidebar Container --- */}
       <aside
         className={`
-                 fixed inset-y-3 left-3 z-40 flex w-55 shrink-0 flex-col rounded-2xl bg-neutral-100 px-4 pb-4 pt-6 shadow-xl
+                 fixed inset-y-3 left-3 z-40 flex w-55 shrink-0 flex-col rounded-2xl bg-brand-50 px-4 pb-4 pt-6 shadow-xl
         transition-transform duration-300 ease-in-out
         lg:static lg:inset-auto lg:h-full lg:shrink-0 lg:translate-x-0 lg:shadow-none
                 ${isOpen ? "translate-x-0" : "-translate-x-full"}
             `}
       >
         {/* Branding Section */}
-                <div className="flex items-center gap-3 px-0 mt-10 lg:mt-0 mb-6">
+                <div className="flex items-center gap-6 px-0 mt-10 lg:mt-0 mb-10 ml-1">
                     <span className="grid place-items-center size-[2rem] rounded-pill bg-brand-gradient shrink-0">
                         <svg viewBox="0 0 24 24" className="size-6 text-white" fill="currentColor" aria-hidden="true">
                             <ellipse cx="8.3" cy="10" rx="2.3" ry="3" />
@@ -89,7 +77,7 @@ export default function Sidebar({ taskCount = 6 }) {
                             <path d="M9 16.2c.9.7 1.9 1 3 1s2.1-.3 3-1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none" />
                         </svg>
                     </span>
-                    <h1 className="text-[1rem] font-medium text-ink pl-[5px]">TaskManager</h1>
+                    <h1 className="text-[20px] font-medium text-ink">TaskFlow</h1>
                 </div>
 
         {/* Navigation Links, grouped by section */}
@@ -108,6 +96,7 @@ export default function Sidebar({ taskCount = 6 }) {
                                             key={item.label}
                                             to={item.path}
                                             onClick={() => setIsOpen(false)}
+                                            end={item.label === "Dashboard"}
                                             className={({ isActive }) =>
                                                 `relative flex items-center gap-[2rem] px-3.5 h-nav text-body transition-all duration-200
                                                 ${isBar ? "rounded-md" : "rounded-pill"}
@@ -132,9 +121,10 @@ export default function Sidebar({ taskCount = 6 }) {
 
                                                     {item.showBadge && (
                                                         <span
-                                                            className={`min-w-6 px-2 py-0.5 text-tiny font-bold text-center text-white
-                                                            ${isBar ? "rounded-sm bg-brand-700" : "rounded-pill"}
-                                                            ${!isBar && (isActive ? "bg-white/25" : "bg-brand-300")}`}
+                                                            className={`min-w-6 px-2 py-0.5 text-tiny font-bold text-center
+                                                            ${isBar
+                                                                ? "rounded-sm bg-brand-100 text-brand-700"
+                                                                : `rounded-pill text-white ${isActive ? "bg-white/25" : "bg-brand-500"}`}`}
                                                         >
                                                             {taskCount}
                                                         </span>

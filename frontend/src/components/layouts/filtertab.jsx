@@ -1,27 +1,37 @@
-
 import React from "react";
 
-export default function FilterTabs({ filters, activeFilter, setActiveFilter }) {
+const FilterTabs = ({ filters, activeFilter, setActiveFilter }) => {
   return (
-    <div className="flex items-center bg-white border border-gray-200 rounded-full px-2 py-2 gap-2 shadow-sm">
-      {filters.map((f) => (
-        <button
-          key={f.label}
-          onClick={() => setActiveFilter(f.label)}
-          className={`flex items-center gap-3 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
-            activeFilter === f.label ? "bg-gray-800 text-white shadow" : "text-gray-500 hover:text-gray-700"
-          }`}
-        >
-          {f.label}
-          <span
-            className={`text-xs font-semibold px-1.5 py-0.5 rounded-full ${
-              activeFilter === f.label ? "bg-white/20 text-white" : "bg-gray-100 text-gray-500"
-            }`}
+    <div className="inline-flex flex-wrap items-center gap-1 bg-white rounded-pill p-1 shadow-card">
+      {filters.map((f) => {
+        const value = f.value ?? f.label;
+        const active = activeFilter === value;
+        return (
+          <button
+            key={value}
+            type="button"
+            onClick={() => setActiveFilter(value)}
+            className={
+              "flex items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors " +
+              (active
+                ? "bg-brand-gradient text-white shadow-active"
+                : "text-ink-muted hover:text-brand-600 hover:bg-brand-50")
+            }
           >
-            {f.count}
-          </span>
-        </button>
-      ))}
+            {f.label}
+            <span
+              className={
+                "min-w-6 text-center rounded-pill px-1.5 py-0.5 text-tiny font-semibold " +
+                (active ? "bg-white/25 text-white" : "bg-kbd text-brand-600")
+              }
+            >
+              {f.count}
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
-}
+};
+
+export default FilterTabs;
