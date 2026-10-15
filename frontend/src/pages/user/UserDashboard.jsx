@@ -56,7 +56,7 @@ export default function UserDashboard() {
             <button type="button" className="text-sm font-semibold text-brand-600 hover:underline">View all tasks</button>
           </div>
           {/* Practice: load and render recent assignments, then link each card to its detail page. */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3 h-[55vh] overflow-hidden">
             <article className="flex min-w-0 flex-col gap-3 rounded-2xl border border-brand-100 bg-white p-5 shadow-card">
               <div className="flex items-start justify-between gap-3">
                 <h3 className="truncate text-heading text-ink">Sample assigned task</h3>
