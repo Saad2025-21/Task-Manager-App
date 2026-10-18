@@ -57,7 +57,7 @@ export default function CreateTaskForm() {
       const { data } = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, payload);
       const createdTask = data?.Tasks || data?.task;
       const createdId = createdTask?._id || createdTask?.id;
-      navigate(createdId ? `/admin/taskdetail/${createdId}` : "/admin/tasks", { replace: true });
+      // navigate(createdId ? `/admin/taskdetail/${createdId}` : "/admin/tasks", { replace: true });
     } catch (requestError) {
       setError(requestError.response?.data?.message || "Could not create this task. Please check the details and try again.");
     } finally {

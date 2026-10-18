@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FiArrowRight } from "react-icons/fi";
+import { FiArrowRight, FiCheckCircle } from "react-icons/fi";
+import { SiTask } from "react-icons/si";
 import axiosInstance from "../../utilis/axiosinstance";
 import { API_PATHS } from "../../utilis/apipath";
+import { TypeAnimation } from "react-type-animation";
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -10,7 +12,7 @@ export default function Signup() {
     email: "",
     password: "",
     role: "user",
-    admincode: "",
+    adminJoinCode: "",
   });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -38,48 +40,72 @@ export default function Signup() {
       setIsSubmitting(false);
     }
   };
-
+  useEffect(() => {
+    if (!error) return;
+    if (!message) return;
+    const id = setTimeout(() => setError(""), 500);
+    return () => clearTimeout(id);
+  }, [error, message]);
   return (
     <main className="min-h-screen bg-[#f4f7f4] p-4 flex items-center justify-center">
-      <div className="grid w-full max-w-5xl overflow-hidden rounded-[28px] bg-white shadow-xl lg:grid-cols-[.95fr_1.05fr] ">
-        <section className="relative hidden flex-col justify-between bg-brand-gradient p-9 text-white lg:flex">
-          <div className="flex items-center gap-3 text-xl font-semibold">
+      <div className="grid lg:w-full w-[80vw] max-w-5xl overflow-visible h-[85vh] lg:h-[95vh] rounded-[28px] bg-white shadow-xl lg:grid-cols-[.95fr_1.05fr] ">
+        {/* desktop */}
+        <section className="relative hidden min-h-[580px]  h-[95vh] rounded-[28px] flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex">
+          <div className="absolute -right-24 -top-20 size-80 rounded-full border border-white/15" />
+          <div className="absolute -bottom-40 -left-24 size-[420px] rounded-full border border-white/15" />
+          <div className="relative flex items-center gap-3 text-xl font-semibold">
             <span className="grid size-10 place-items-center rounded-xl bg-white/15">
-              ✓
+              <SiTask className="animate-pulse" />
             </span>
             Taskflow
           </div>
-          <div className="max-w-md">
-            <p className="text-sm font-semibold uppercase tracking-[.2em] text-white/70">
-              Start with clarity
+          <div className="relative max-w-md">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[.2em] text-white/70">
+              A calmer way to work
             </p>
-            <h1 className="mt-4 text-4xl font-semibold leading-tight">
-              A better rhythm for your team starts here.
+            <h1 className="text-4xl font-semibold leading-tight">
+              Make room for the work that matters.
             </h1>
             <p className="mt-5 leading-7 text-white/75">
-              Create a workspace to organize tasks, make progress visible, and
-              keep everyone moving together.
+              Bring your projects, priorities, and people together in one clear
+              workspace.
             </p>
+            <div className="mt-7 space-y-3 text-sm text-white/90">
+              {[
+                "Know what needs attention",
+                "Keep every task moving",
+                "Celebrate progress as a team",
+              ].map((item) => (
+                <p key={item} className="flex items-center gap-2">
+                  <FiCheckCircle />
+                  {item}
+                </p>
+              ))}
+            </div>
           </div>
-          <p className="text-xs text-white/60">
-            Simple planning. Meaningful progress.
+          <p className="relative text-xs text-white/60">
+            Your workspace, right where you left it.
           </p>
         </section>
-        <section className="flex items-center px-6 py-11 sm:px-12 lg:px-14">
-          <div className="mx-auto w-full max-w-sm">
+        {/* Mobile */}
+        <section className="flex items-center px-6 py-11 sm:px-12 lg:px-14 h-full rounded-[28px]">
+          <div className="mx-auto w-full max-w-sm h-full overflow-visible">
             <div className="mb-8 lg:hidden">
               <div className="mb-6 grid size-11 place-items-center rounded-2xl bg-brand-gradient text-xl font-bold text-white">
-                T
+                <SiTask className="animate-pulse"/>
               </div>
               <p className="text-sm font-semibold text-brand-700">
                 TASKFLOW WORKSPACE
               </p>
             </div>
-            <p className="text-sm font-semibold uppercase tracking-[.15em] text-brand-600">
-              Get started
-            </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-ink">
-              Create your account
+              <TypeAnimation
+                sequence={["Get started", 1500, "Create Your Account", 1500]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+                className="text-brand-600"
+              />
             </h2>
             <p className="mt-2 text-sm text-ink-muted">
               A few details and you’ll be ready to plan.
@@ -143,7 +169,7 @@ export default function Signup() {
                   className="mt-2 w-full rounded-xl border border-line px-4 py-[11px] text-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
                 />
               </label>
-              <fieldset className="text-sm font-medium text-ink">
+              <fieldset className="mb-[12px] text-sm font-medium text-ink">
                 <legend className="mb-2">Role</legend>
                 <div className="flex gap-6">
                   <label className="flex items-center gap-2">
@@ -170,22 +196,19 @@ export default function Signup() {
                     />
                     Admin
                   </label>
+                  {form.role === "admin" && (
+                    <input
+                      type="password"
+                      value={form.adminJoinCode}
+                      onChange={(e) =>
+                        setForm({ ...form, adminJoinCode: e.target.value })
+                      }
+                      className="m-0 w-[25vw] lg:w-[12vw]  rounded-[10px] border border-line p-[5px] text-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
+                    />
+                  )}
                 </div>
               </fieldset>
 
-              {form.role === "admin" && (
-                <label className="block text-sm font-medium text-ink">
-                  Admin code
-                  <input
-                    type="password"
-                    value={form.admincode}
-                    onChange={(e) =>
-                      setForm({ ...form, admincode: e.target.value })
-                    }
-                    className="mt-2 w-full rounded-xl border border-line px-4 py-[11px] text-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
-                  />
-                </label>
-              )}
               <button
                 disabled={isSubmitting}
                 className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-gradient py-[13px] text-sm font-semibold text-white shadow-active transition hover:brightness-105 disabled:cursor-wait disabled:opacity-70"
@@ -193,16 +216,16 @@ export default function Signup() {
                 {isSubmitting ? "Creating account..." : "Create account"}{" "}
                 {!isSubmitting && <FiArrowRight />}
               </button>
+              <p className="-mt-[10px] text-center text-sm text-ink-muted">
+                Already have an account?{" "}
+                <Link
+                  to="/"
+                  className="font-semibold text-brand-600 hover:underline"
+                >
+                  Sign in
+                </Link>
+              </p>
             </form>
-            <p className="mt-6 text-center text-sm text-ink-muted">
-              Already have an account?{" "}
-              <Link
-                to="/"
-                className="font-semibold text-brand-600 hover:underline"
-              >
-                Sign in
-              </Link>
-            </p>
           </div>
         </section>
       </div>

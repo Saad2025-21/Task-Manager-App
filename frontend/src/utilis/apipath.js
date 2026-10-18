@@ -6,7 +6,7 @@ export const API_PATHS = {
     AUTH: {
         SignUP: "/api/auth/signup",
         LOGIN: "/api/auth/login",
-        GET_PROFILE: "/api/auth/profile",
+        GET_PROFILE: "/api/auth/user-profile",
     },
     USERS: {
         GET_ALL_USERS: "/api/users",

@@ -23,7 +23,7 @@ export default function Sidebar({ taskCount = 0 }) {
   const root = role === "admin" ? "/admin" : "/user";
   const navItems = [
     { label: "Dashboard", icon: <FiGrid />, path: `${root}/dashboard`, section: "MENU" },
-    { label: "My tasks", icon: <FiCheckSquare />, path: `${root}/tasks`, section: "MENU", showBadge: true },
+    { label: "Tasks", icon: <FiCheckSquare />, path: `${root}/tasks`, section: "MENU", showBadge: true },
     ...(role === "admin"
       ? [
           { label: "Create task", icon: <FiPlusCircle />, path: "/admin/create-task", section: "MENU" },

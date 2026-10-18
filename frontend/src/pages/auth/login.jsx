@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FiArrowRight, FiCheckCircle, FiLock } from "react-icons/fi";
+import { SiTask } from "react-icons/si";
 import axiosInstance from "../../utilis/axiosinstance";
 import { API_PATHS } from "../../utilis/apipath";
+import { TypeAnimation } from "react-type-animation";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -39,13 +41,13 @@ export default function Login() {
 
   return (
     <main className="min-h-screen bg-[#f4f7f4] p-4 flex items-center justify-center">
-      <div className="grid w-full max-w-5xl overflow-hidden rounded-[28px] bg-white shadow-xl lg:grid-cols-[1.05fr_.95fr]">
-        <section className="relative hidden min-h-[580px] flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex">
+      <div className="grid w-full max-w-5xl overflow-visible h-[85vh] lg:h-[95vh] rounded-[28px] bg-white shadow-xl lg:grid-cols-[.95fr_1.05fr] ">
+        <section className="relative hidden min-h-[580px]  h-[95vh] rounded-[28px] flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex">
           <div className="absolute -right-24 -top-20 size-80 rounded-full border border-white/15" />
           <div className="absolute -bottom-40 -left-24 size-[420px] rounded-full border border-white/15" />
           <div className="relative flex items-center gap-3 text-xl font-semibold">
             <span className="grid size-10 place-items-center rounded-xl bg-white/15">
-              ✓
+              <SiTask className="animate-pulse" />
             </span>
             Taskflow
           </div>
@@ -81,17 +83,27 @@ export default function Login() {
           <div className="mx-auto w-full max-w-sm">
             <div className="mb-8 lg:hidden">
               <div className="mb-6 grid size-11 place-items-center rounded-2xl bg-brand-gradient text-xl font-bold text-white">
-                T
+                <SiTask />
               </div>
               <p className="text-sm font-semibold text-brand-700">
                 TASKFLOW WORKSPACE
               </p>
             </div>
-            <p className="text-sm font-semibold uppercase tracking-[.15em] text-brand-600">
-              Welcome back
-            </p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-ink">
-              Sign in to Taskflow
+              <TypeAnimation
+                sequence={[
+                  "Welcome Back",
+                  1500,
+                  "Sign in",
+                  1500,
+                  "To your Task",
+                  1500,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+                className="text-brand-600"
+              />
             </h2>
             <p className="mt-2 text-sm text-ink-muted">
               Enter your details to continue to your workspace.
