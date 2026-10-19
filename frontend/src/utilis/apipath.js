@@ -9,9 +9,9 @@ export const API_PATHS = {
         GET_PROFILE: "/api/auth/user-profile",
     },
     USERS: {
-        GET_ALL_USERS: "/api/users",
-        GET_USER_BY_ID: (userId) => `/api/users/${userId}`,
-        CREATE_USER: "/api/users",
+        GET_ALL_USERS: "/api/users/get-user",
+        GET_USER_BY_ID: (userId) => `/api/users/get-user/${userId}`,
+        CREATE_USER: "/api/users/create-User",
         DELETE_USER: (userId) => `/api/users/${userId}`,
     },
     TASKS: {

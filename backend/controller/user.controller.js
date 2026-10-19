@@ -7,7 +7,7 @@ export const getUser = async (req,res,next) => {
 try {
     const users = await User.find({role : 'user'}).select('-password');
 
-    const userTaskWithCount = Promise.all(
+    const userTaskWithCount = await Promise.all(
         users.map(async (user)=>{
             const pendingTask = await Task.countDocuments({
                 assignee: user._id,
@@ -15,7 +15,7 @@ try {
             })
             const inProgressTask = await Task.countDocuments({
                 assignee:user._id,
-                status:"inProgress",
+                status:"in-progress",
             }) 
 
             const completedTask = await Task.countDocuments({
@@ -39,5 +39,16 @@ try {
 }
 }
 
+export const getUserById = async (req,res,next)=>{
+console.log("done")
+} 
+
+export const createUser = async (req,res,next)=>{
+console.log("done")
+} 
+
+export const deleteUser = async (req,res,next)=>{
+console.log("done")
+} 
 
 

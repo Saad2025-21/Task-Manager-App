@@ -48,7 +48,7 @@ export default function Profile() {
           <p className="text-sm text-ink-muted">Loading your profile...</p>
         )}
         {profile && (
-          <section className="max-w-2xl overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-card">
+          <section className="max-w-2xl overflow-visible rounded-2xl border border-brand-100 bg-white shadow-card">
             <div className="bg-brand-gradient px-6 py-8 text-white sm:px-8">
               <span className="grid size-16 place-items-center rounded-2xl bg-white/15 text-2xl font-semibold">
                 {(profile.username || "?").slice(0, 1).toUpperCase()}
