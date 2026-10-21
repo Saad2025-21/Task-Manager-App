@@ -8,16 +8,18 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../../utilis/axiosinstance";
 import { API_PATHS } from "../../utilis/apipath";
 import { TbLoader3 } from "react-icons/tb";
+import { Link } from "react-router-dom";
 
 export default function UserDashboard() {
   const [dashboardData, setdashboardData] = useState(null);
+
   const [error, seterror] = useState("");
+
   useEffect(() => {
     let cancelled = false;
     axiosInstance
       .get(API_PATHS.TASKS.GET_USER_DASHBAORD_DATA)
       .then(({ data }) => {
-        console.log(data);
         if (!cancelled) {
           setdashboardData(data);
         }
@@ -68,7 +70,7 @@ export default function UserDashboard() {
       style: "bg-white text-ink",
     },
   ];
-  const recent_task = dashboardData?.recentTask || 0;
+  const recent_task = dashboardData?.recentTask || [];
   const status_styles = {
     "in-progress": { label: "In progress", color: "text-red-600" },
     pending: { label: "Pending", color: "text-yellow-600" },
@@ -114,7 +116,7 @@ export default function UserDashboard() {
           ))}
         </section>
 
-        <section className="grid min-h-[320px] grid-cols-1 gap-4 lg:grid-cols-2">
+        <section className="grid min-h-80 grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="min-h-72 rounded-2xl border border-brand-100 bg-white p-5 shadow-card">
             <TaskDistributionChart
               data={[
@@ -126,7 +128,7 @@ export default function UserDashboard() {
                 {
                   name: "In progress",
                   value:
-                    dashboardData?.chart?.taskDistribution["in-progress"] || 0,
+                    dashboardData?.chart?.taskDistribution?.["in-progress"] || 0,
                   color: "#21805a",
                 },
                 {
@@ -180,7 +182,7 @@ export default function UserDashboard() {
             {recent_task.map((task) => {
               const status = task.status;
               const checklist = task?.todochecklist || [];
-              const total = checklist.length;
+              const total = checklist.length ?? 0;
               const completed = checklist.filter(
                 (done) => done.completed,
               ).length;
@@ -191,41 +193,43 @@ export default function UserDashboard() {
                   key={task._id}
                   className="flex min-w-0 flex-col gap-3 rounded-2xl border border-brand-100 bg-white p-5 shadow-card"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="truncate text-heading text-ink">
-                      {task.title}
-                    </h3>
-                    <div className="flex gap-1">
-                      <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill bg-chart-2/10 px-2.5 py-0.5 text-tiny font-medium text-chart-2">
-                        <span className="h-1.5 w-1.5 rounded-pill bg-current" />
-                        {status_styles[status].label}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill bg-chart-2/10 px-2.5 py-0.5 text-tiny font-medium text-chart-2">
-                        <span className="h-1.5 w-1.5 rounded-pill bg-current" />
-                        {task.priority}
-                      </span>
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="truncate text-heading text-ink">
+                        <Link to={`/user/taskdetail/${task._id}`}>
+                          {task.title}
+                        </Link>
+                      </h3>
+                      <div className="flex gap-1">
+                        <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill bg-chart-2/10 px-2.5 py-0.5 text-tiny font-medium text-chart-2">
+                          <span className="h-1.5 w-1.5 rounded-pill bg-current" />
+                          {(status_styles[status] || status_styles.pending).label}
+                        </span>
+                        <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill bg-chart-2/10 px-2.5 py-0.5 text-tiny font-medium text-chart-2">
+                          <span className="h-1.5 w-1.5 rounded-pill bg-current" />
+                          {task.priority}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <p className="min-h-[2.8em] text-small text-ink-muted">
-                    {task.description}
-                  </p>
-                  <div className="mt-auto">
-                    <div className="flex items-center justify-between text-small">
-                      <span className="text-ink-muted">Task progress</span>
-                      <span className="font-semibold text-brand-600">
-                        {percent}%
-                      </span>
-                    </div>
-                    <div className="mt-2 h-2 w-full overflow-hidden rounded-pill bg-brand-100">
-                      <div
-                        className="h-full rounded-pill bg-brand-gradient"
-                        style={{ width: `${percent}% ` }}
-                      />
-                    </div>
-                    <p className="mt-2 text-small text-ink-muted">
-                      {completed}/{total} checklist items
+                    <p className="min-h-[2.8em] text-small text-ink-muted">
+                      {task.description}
                     </p>
-                  </div>
+                    <div className="mt-auto">
+                      <div className="flex items-center justify-between text-small">
+                        <span className="text-ink-muted">Task progress</span>
+                        <span className="font-semibold text-brand-600">
+                          {percent}%
+                        </span>
+                      </div>
+                      <div className="mt-2 h-2 w-full overflow-hidden rounded-pill bg-brand-100">
+                        <div
+                          className="h-full rounded-pill bg-brand-gradient"
+                          style={{ width: `${percent}%` }}
+                        />
+                      </div>
+                      <p className="mt-2 text-small text-ink-muted">
+                        {completed}/{total} checklist items
+                      </p>
+                    </div>
                 </article>
               );
             })}

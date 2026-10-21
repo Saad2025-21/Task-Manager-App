@@ -224,8 +224,7 @@ export default function TaskBoard() {
             const checklist = task?.todochecklist || [];
             const total = checklist.length;
             const completed = checklist.filter((done) => done.completed).length;
-            const percent =
-              total === 0 ? 0 : Math.round((completed / total) * 100);
+            const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
             return (
               <article
                 key={task._id}
@@ -259,13 +258,13 @@ export default function TaskBoard() {
                   <div
                     className="mt-2 h-2 w-full overflow-hidden rounded-pill bg-brand-100"
                     role="progressbar"
-                    aria-valuenow="0"
+                    aria-valuenow={percent}
                     aria-valuemin="0"
                     aria-valuemax="100"
                   >
                     <div
-                      className="h-fullrounded-pill bg-brand-gradient"
-                      style={{ width: `${percent} %` }}
+                      className="h-full rounded-pill bg-brand-gradient"
+                      style={{ width: `${percent}%` }}
                     />
                   </div>
                   <p className="mt-2 text-small text-ink-muted">

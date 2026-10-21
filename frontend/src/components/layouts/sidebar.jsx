@@ -96,7 +96,7 @@ export default function Sidebar() {
       >
         {/* Branding Section */}
         <div className="flex items-center gap-6 px-0 mt-10 lg:mt-0 mb-10 ml-1">
-          <span className="grid place-items-center size-[2rem] rounded-pill bg-brand-gradient shrink-0">
+          <span className="grid place-items-center size-8 rounded-pill bg-brand-gradient shrink-0">
             <svg
               viewBox="0 0 24 24"
               className="size-6 text-white"
@@ -135,7 +135,7 @@ export default function Sidebar() {
                       onClick={() => setIsOpen(false)}
                       end={item.label === "Dashboard"}
                       className={({ isActive }) =>
-                        `relative flex items-center gap-[2rem] px-3.5 h-nav text-body transition-all duration-200
+                        `relative flex items-center gap-8 px-3.5 h-nav text-body transition-all duration-200
                                                 ${isBar ? "rounded-md" : "rounded-pill"}
                                                 ${
                                                   isActive

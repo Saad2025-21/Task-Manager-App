@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import "./index.css"
 import Login from './pages/auth/login';
@@ -11,7 +11,7 @@ import ManageUsers from './pages/admin/ManageUsers';
 import CreateTask from './pages/admin/CreateTask';
 import UserDashboard from './pages/user/UserDashboard';
 import Mytask from './pages/user/Mytask';
-// import Taskdetail from './pages/user/Taskdetail';
+import Taskdetail from './pages/user/Taskdetail';
 import Profile from './pages/Profile';
 
 import PrivateRoute from './routes/PrivateRoute';
@@ -33,19 +33,18 @@ const App = () => {
             <Route path="/admin/tasks" element={<ManageTasks />} />
             <Route path="/admin/create-task" element={<CreateTask />} />
             <Route path="/admin/users" element={<ManageUsers />} />
-            {/* <Route path="/admin/taskdetail/:id" element={<Taskdetail />} /> */}
           </Route>
 
           {/* User routes */}
           <Route element={<PrivateRoute allowedRoles={["user"]} />}>
             <Route path="/user/dashboard" element={<UserDashboard />} />
             <Route path="/user/tasks" element={<Mytask />} />
-            {/* <Route path="/user/taskdetail/:id" element={<Taskdetail />} /> */}
+            <Route path="/user/taskdetail/:id" element={<Taskdetail />} />
           </Route>
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
           </Route>
-          <Route path="*" element={<Login />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </div>
