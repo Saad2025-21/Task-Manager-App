@@ -106,11 +106,17 @@ export const getTaskById = async (req, res, next) => {
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
-
+    const isAssigned = task.assignee?.some(
+      (u) => u.toString() === req.user.id.toString(),
+    );
+    if (!isAssigned && req.user.role !== "admin") {
+      return res
+        .status(403)
+        .json({ message: "Not Authorized to view the task" });
+    }
     res.status(200).json(task);
   } catch (error) {
-    console.error("GET TASK ERROR:", error);
-    return res.status(500).json({ message: "Server Error" });
+    return next(error);
   }
 };
 
@@ -201,11 +207,22 @@ export const updateTaskchecklist = async (req, res, next) => {
       return next(handleError(404, "Task not found"));
     }
 
-    if (!task.assignee?.includes(req.user.id) && req.user.role !== "admin") {
-      return next(handleError(403, "Not authorized to update the checklist"));
+    const isAssigned = task.assignee?.some(
+      (u) => u.toString() === req.user.id.toString(),
+    );
+    if (!isAssigned && req.user.role !== "admin") {
+      return res
+        .status(403)
+        .json({ message: "Not Authorized to view the task" });
+    }
+    if (!Array.isArray(todochecklist)) {
+      return next(handleError(400, "Todochecklist must be an array"));
     }
 
-    task.todochecklist = todochecklist;
+    task.todochecklist.forEach((t) => {
+      const incoming = todochecklist.find((s) => s._id === t._id.toString());
+      if (incoming) t.completed = Boolean(incoming.completed);
+    });
 
     const completedCount = task.todochecklist.filter(
       (item) => item.completed,
@@ -226,11 +243,9 @@ export const updateTaskchecklist = async (req, res, next) => {
 
     await task.save();
 
-    const updatedTask = await Task.findById(req.params.id);
-
     res
       .status(200)
-      .json({ message: "Updated successfully ", task: updatedTask });
+      .json({ message: "Updated successfully ", task});
   } catch (error) {
     return next(error);
   }
