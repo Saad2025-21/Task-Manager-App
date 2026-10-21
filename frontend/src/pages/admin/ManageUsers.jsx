@@ -55,7 +55,7 @@ export default function ManageUsers() {
       const { data } = await axiosInstance.get(
         API_PATHS.USERS.GET_USER_BY_ID(id),
       );
-      console.log(data)
+      console.log(data);
       setSelectedUser(data?.user || data);
     } catch (requestError) {
       setError(
@@ -88,13 +88,10 @@ export default function ManageUsers() {
     setError("");
     try {
       await axiosInstance.delete(
-        API_PATHS.USERS.DELETE_USER(pendingDelete._id || pendingDelete.id),
+        API_PATHS.USERS.DELETE_USER(pendingDelete._id),
       );
       setUsers((current) =>
-        current.filter(
-          (user) =>
-            (user._id || user.id) !== (pendingDelete._id || pendingDelete.id),
-        ),
+        current.filter((user) => user._id !== pendingDelete._id),
       );
       setNotice("Team member removed.");
       setPendingDelete(null);
@@ -112,7 +109,7 @@ export default function ManageUsers() {
       .toLowerCase()
       .includes(query.trim().toLowerCase()),
   );
-
+  console.log(users);
   return (
     <div className="display">
       <Sidebar />

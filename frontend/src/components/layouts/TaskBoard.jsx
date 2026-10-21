@@ -3,15 +3,18 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../../utilis/axiosinstance";
 import { API_PATHS } from "../../utilis/apipath";
 import { TbLoader3 } from "react-icons/tb";
+import { FiTrash2 } from "react-icons/fi";
 export default function TaskBoard() {
   const [dashboardData, setdashboardData] = useState(null);
   const [error, seterror] = useState("");
+  const [notice, setnotice] = useState("");
 
   useEffect(() => {
     let cancelled = false;
     axiosInstance
       .get(API_PATHS.TASKS.GET_DASHBOARD_DATA)
       .then(({ data }) => {
+        console.log(data);
         if (!cancelled) {
           setdashboardData(data);
         }
@@ -28,6 +31,16 @@ export default function TaskBoard() {
       cancelled = true;
     };
   }, []);
+  useEffect(() => {
+    if (!notice) return;
+    const id = setTimeout(() => setnotice(""), 2000);
+    return () => clearTimeout(id);
+  }, [notice]);
+  useEffect(() => {
+    if (!error) return;
+    const id = setTimeout(() => seterror(""), 2000);
+    return () => clearTimeout(id);
+  }, [error]);
   const [selected, setselected] = useState("all");
   const [query, setquery] = useState("");
   if (!dashboardData && !error) {
@@ -49,6 +62,24 @@ export default function TaskBoard() {
   const searchtask = visibleTasks.filter((name) =>
     name.title.toLowerCase().includes(query.toLowerCase()),
   );
+  const deleteTask = async (task) => {
+    if (!task) return;
+    try {
+      await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(task._id));
+      console.log("delete");
+      setnotice("Task removed.");
+      setdashboardData((prev) => ({
+        ...prev,
+        recentTask: prev.recentTask.filter((t) => t._id !== task._id),
+      }));
+    } catch (requestError) {
+      seterror(
+        requestError.response?.data?.message || "Could not remove this task.",
+      );
+    }
+  };
+  const user = JSON.parse(localStorage.getItem("user" || "null"));
+  const isAdmin = user?.role === "admin";
   return (
     <div className="flex h-full min-h-0 flex-col gap-6 font-sans text-ink">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -171,14 +202,30 @@ export default function TaskBoard() {
           />
         </label>
       </div>
-
+      {error && (
+        <p
+          role="alert"
+          className="rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-700"
+        >
+          {error}
+        </p>
+      )}
+      {notice && (
+        <p
+          role="status"
+          className="rounded-xl border border-brand-200 bg-brand-50 px-4 py-3 text-sm text-brand-700"
+        >
+          {notice}
+        </p>
+      )}
       <div className="min-h-0 flex-1 overflow-y-auto">
         <div className="grid grid-cols-1 gap-4 pb-3 sm:grid-cols-2 2xl:grid-cols-3">
           {searchtask.map((task) => {
             const checklist = task?.todochecklist || [];
             const total = checklist.length;
             const completed = checklist.filter((done) => done.completed).length;
-            const percent = total === 0 ? 0 : (completed / total) * 100;
+            const percent =
+              total === 0 ? 0 : Math.round((completed / total) * 100);
             return (
               <article
                 key={task._id}
@@ -216,11 +263,25 @@ export default function TaskBoard() {
                     aria-valuemin="0"
                     aria-valuemax="100"
                   >
-                    <div className="h-full w-0 rounded-pill bg-brand-gradient" />
+                    <div
+                      className="h-fullrounded-pill bg-brand-gradient"
+                      style={{ width: `${percent} %` }}
+                    />
                   </div>
                   <p className="mt-2 text-small text-ink-muted">
                     <span className="font-semibold text-ink">{completed}</span>/
                     {total} checklist items
+                    {isAdmin && (
+                      <button
+                        onClick={() => {
+                          deleteTask(task);
+                        }}
+                        // aria-label={`Remove ${user.username || user.name}`}
+                        className="rounded-lg p-2 text-ink-faint transition relative left-20 hover:bg-red-50 hover:text-red-600"
+                      >
+                        <FiTrash2 />
+                      </button>
+                    )}
                   </p>
                 </div>
               </article>

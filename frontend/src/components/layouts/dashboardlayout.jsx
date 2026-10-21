@@ -159,9 +159,12 @@ export default function DashboardLayout() {
               {recent_task.map((task) => {
                 const status = task.status;
                 const checklist = task?.todochecklist || [];
-                const total =  checklist.length
-                const completed = checklist.filter((done)=> done.completed).length
-                const percent =  (total === 0) ? 0 : Math.round(completed /total *100)
+                const total = checklist.length;
+                const completed = checklist.filter(
+                  (done) => done.completed,
+                ).length;
+                const percent =
+                  total === 0 ? 0 : Math.round((completed / total) * 100);
                 return (
                   <article
                     key={task._id}
@@ -188,10 +191,15 @@ export default function DashboardLayout() {
                     <div className="mt-auto">
                       <div className="flex items-center justify-between text-small">
                         <span className="text-ink-muted">Task progress</span>
-                        <span className="font-semibold text-brand-600">{percent}%</span>
+                        <span className="font-semibold text-brand-600">
+                          {percent}%
+                        </span>
                       </div>
                       <div className="mt-2 h-2 w-full overflow-hidden rounded-pill bg-brand-100">
-                        <div className="h-full w-0 rounded-pill bg-brand-gradient" />
+                        <div
+                          className="h-full rounded-pill bg-brand-gradient"
+                          style={{ width: `${percent}%` }}
+                        />
                       </div>
                       <p className="mt-2 text-small text-ink-muted">
                         {completed}/{total} checklist items

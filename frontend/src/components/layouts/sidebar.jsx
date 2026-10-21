@@ -11,27 +11,53 @@ import {
   FiUser,
 } from "react-icons/fi";
 
-// "bar"  = left accent bar + bold label + colored icon (matches the Donezo reference)
-// "pill" = filled gradient pill (matches the Tasko reference)
 const ACTIVE_STYLE = "bar";
 
-// taskCount is optional: pass the real number from your app, e.g. <Sidebar taskCount={tasks.length} />
-export default function Sidebar({ taskCount = 0 }) {
+export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const role = localStorage.getItem("role") || "admin";
-
   const root = role === "admin" ? "/admin" : "/user";
   const navItems = [
-    { label: "Dashboard", icon: <FiGrid />, path: `${root}/dashboard`, section: "MENU" },
-    { label: "Tasks", icon: <FiCheckSquare />, path: `${root}/tasks`, section: "MENU", showBadge: true },
+    {
+      label: "Dashboard",
+      icon: <FiGrid />,
+      path: `${root}/dashboard`,
+      section: "MENU",
+    },
+    {
+      label: "Tasks",
+      icon: <FiCheckSquare />,
+      path: `${root}/tasks`,
+      section: "MENU",
+    },
     ...(role === "admin"
       ? [
-          { label: "Create task", icon: <FiPlusCircle />, path: "/admin/create-task", section: "MENU" },
-          { label: "People", icon: <FiUsers />, path: "/admin/users", section: "MENU" },
+          {
+            label: "Create task",
+            icon: <FiPlusCircle />,
+            path: "/admin/create-task",
+            section: "MENU",
+          },
+          {
+            label: "People",
+            icon: <FiUsers />,
+            path: "/admin/users",
+            section: "MENU",
+          },
         ]
       : []),
-    { label: "Profile", icon: <FiUser />, path: "/profile", section: "GENERAL" },
-    { label: "Logout", icon: <FiLogOut />, path: "/logout", section: "GENERAL" },
+    {
+      label: "Profile",
+      icon: <FiUser />,
+      path: "/profile",
+      section: "GENERAL",
+    },
+    {
+      label: "Logout",
+      icon: <FiLogOut />,
+      path: "/logout",
+      section: "GENERAL",
+    },
   ];
 
   const sections = ["MENU", "GENERAL"];
@@ -69,74 +95,77 @@ export default function Sidebar({ taskCount = 0 }) {
             `}
       >
         {/* Branding Section */}
-                <div className="flex items-center gap-6 px-0 mt-10 lg:mt-0 mb-10 ml-1">
-                    <span className="grid place-items-center size-[2rem] rounded-pill bg-brand-gradient shrink-0">
-                        <svg viewBox="0 0 24 24" className="size-6 text-white" fill="currentColor" aria-hidden="true">
-                            <ellipse cx="8.3" cy="10" rx="2.3" ry="3" />
-                            <ellipse cx="15.7" cy="10" rx="2.3" ry="3" />
-                            <path d="M9 16.2c.9.7 1.9 1 3 1s2.1-.3 3-1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none" />
-                        </svg>
-                    </span>
-                    <h1 className="text-[20px] font-medium text-ink">TaskFlow</h1>
-                </div>
+        <div className="flex items-center gap-6 px-0 mt-10 lg:mt-0 mb-10 ml-1">
+          <span className="grid place-items-center size-[2rem] rounded-pill bg-brand-gradient shrink-0">
+            <svg
+              viewBox="0 0 24 24"
+              className="size-6 text-white"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <ellipse cx="8.3" cy="10" rx="2.3" ry="3" />
+              <ellipse cx="15.7" cy="10" rx="2.3" ry="3" />
+              <path
+                d="M9 16.2c.9.7 1.9 1 3 1s2.1-.3 3-1"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+          </span>
+          <h1 className="text-[20px] font-medium text-ink">TaskFlow</h1>
+        </div>
 
         {/* Navigation Links, grouped by section */}
         <nav className="flex flex-col gap-5">
-                    {sections.map((section) => (
-                        <div key={section}>
-                            <p className="px-0 mb-2 text-tiny uppercase font-medium text-ink-muted">
-                                {section}
-                            </p>
+          {sections.map((section) => (
+            <div key={section}>
+              <p className="px-0 mb-2 text-tiny uppercase font-medium text-ink-muted">
+                {section}
+              </p>
 
-                            <div className="flex flex-col gap-0.5">
-                                {navItems
-                                    .filter((item) => item.section === section)
-                                    .map((item) => (
-                                        <NavLink
-                                            key={item.label}
-                                            to={item.path}
-                                            onClick={() => setIsOpen(false)}
-                                            end={item.label === "Dashboard"}
-                                            className={({ isActive }) =>
-                                                `relative flex items-center gap-[2rem] px-3.5 h-nav text-body transition-all duration-200
+              <div className="flex flex-col gap-0.5">
+                {navItems
+                  .filter((item) => item.section === section)
+                  .map((item) => (
+                    <NavLink
+                      key={item.label}
+                      to={item.path}
+                      onClick={() => setIsOpen(false)}
+                      end={item.label === "Dashboard"}
+                      className={({ isActive }) =>
+                        `relative flex items-center gap-[2rem] px-3.5 h-nav text-body transition-all duration-200
                                                 ${isBar ? "rounded-md" : "rounded-pill"}
-                                                ${isActive
+                                                ${
+                                                  isActive
                                                     ? isBar
-                                                        ? "text-ink font-semibold"
-                                                        : "bg-brand-gradient text-white font-semibold shadow-active"
+                                                      ? "text-ink font-semibold"
+                                                      : "bg-brand-gradient text-white font-semibold shadow-active"
                                                     : "font-medium text-ink-muted hover:bg-brand-50 hover:text-ink"
                                                 }`
-                                            }
-                                        >
-                                            {({ isActive }) => (
-                                                <>
-                                                    {isBar && isActive && (
-                                                        <span className="absolute -left-4 top-1 bottom-1 w-1 rounded-r-pill bg-brand-gradient-v" />
-                                                    )}
+                      }
+                    >
+                      {({ isActive }) => (
+                        <>
+                          {isBar && isActive && (
+                            <span className="absolute -left-4 top-1 bottom-1 w-1 rounded-r-pill bg-brand-gradient-v" />
+                          )}
 
-                                                    <span className={`text-lg shrink-0 ${isBar && isActive ? "text-brand-600" : ""}`}>
-                                                        {item.icon}
-                                                    </span>
-                                                    <span className="flex-1">{item.label}</span>
-
-                                                    {item.showBadge && (
-                                                        <span
-                                                            className={`min-w-6 px-2 py-0.5 text-tiny font-bold text-center
-                                                            ${isBar
-                                                                ? "rounded-sm bg-brand-100 text-brand-700"
-                                                                : `rounded-pill text-white ${isActive ? "bg-white/25" : "bg-brand-500"}`}`}
-                                                        >
-                                                            {taskCount}
-                                                        </span>
-                                                    )}
-                                                </>
-                                            )}
-                                        </NavLink>
-                                    ))}
-                            </div>
-                        </div>
-                    ))}
-                </nav>
+                          <span
+                            className={`text-lg shrink-0 ${isBar && isActive ? "text-brand-600" : ""}`}
+                          >
+                            {item.icon}
+                          </span>
+                          <span className="flex-1">{item.label}</span>
+                        </>
+                      )}
+                    </NavLink>
+                  ))}
+              </div>
+            </div>
+          ))}
+        </nav>
       </aside>
     </>
   );

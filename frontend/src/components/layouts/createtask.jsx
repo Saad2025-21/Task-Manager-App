@@ -24,6 +24,7 @@ export default function CreateTaskForm() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [assigneeError, setAssigneeError] = useState("");
+  const [message, setmessage] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -82,8 +83,10 @@ export default function CreateTaskForm() {
         payload,
       );
       const createdTask = data?.Tasks || data?.task;
-      const createdId = createdTask?._id || createdTask?.id;
-      // navigate(createdId ? `/admin/taskdetail/${createdId}` : "/admin/tasks", { replace: true });
+      if (createdTask) {
+        setmessage(true);
+        navigate("/admin/tasks")
+      }
     } catch (requestError) {
       setError(
         requestError.response?.data?.message ||
@@ -121,6 +124,14 @@ export default function CreateTaskForm() {
           className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
         >
           {error}
+        </p>
+      )}
+      {message && (
+        <p
+          role="alert"
+          className="rounded-xl border border-green-50 bg-green-50 px-4 py-3 text-sm text-green-700"
+        >
+          Task created successfully
         </p>
       )}
       <div className="grid gap-5 lg:grid-cols-[1.1fr_.9fr]">
@@ -197,7 +208,7 @@ export default function CreateTaskForm() {
               className={`${fieldClass} min-h-28`}
             >
               {users.map((user) => (
-                <option key={user._id} value={user._id }>
+                <option key={user._id} value={user._id}>
                   {user.username || user.name || user.email}
                 </option>
               ))}
