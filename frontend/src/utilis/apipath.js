@@ -1,5 +1,9 @@
+// const BASE_URL = import.meta.env.VITE_API_BASE_URL || (import.meta.env.DEV ? "http://localhost:3000" : "")
 const BASE_URL = "https://task-manager-app-five-bay.vercel.app"
-// const BASE_URL = "http://localhost:3000"
+if (!BASE_URL) {
+    throw new Error("VITE_API_BASE_URL must be set to the deployed backend URL.")
+}
+
 export default BASE_URL;
 
 export const API_PATHS = {

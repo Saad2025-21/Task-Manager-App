@@ -11,11 +11,15 @@ import cookieParser from 'cookie-parser';
 
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const allowedOrigins = [
+  "https://task-manager-app-five-bay.vercel.app",
   "https://task-manager-app-1386.vercel.app",
-  //  "http://localhost:5173",
+  // ...(process.env.FRONTEND_URL || "")
+  //   .split(",")
+  //   .map((origin) => origin.trim())
+  //   .filter(Boolean),
 ];
 
 mongoose.connect(process.env.MONGO_URI)
