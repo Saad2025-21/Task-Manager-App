@@ -47,7 +47,6 @@ export default function CreateTaskForm() {
       .finally(() => {
         if (!cancelled) setLoadingUsers(false);
       });
-    console.log(users);
     return () => {
       cancelled = true;
     };

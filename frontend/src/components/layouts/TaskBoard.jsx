@@ -14,7 +14,6 @@ export default function TaskBoard() {
     axiosInstance
       .get(API_PATHS.TASKS.GET_DASHBOARD_DATA)
       .then(({ data }) => {
-        console.log(data);
         if (!cancelled) {
           setdashboardData(data);
         }
@@ -66,7 +65,6 @@ export default function TaskBoard() {
     if (!task) return;
     try {
       await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(task._id));
-      console.log("delete");
       setnotice("Task removed.");
       setdashboardData((prev) => ({
         ...prev,

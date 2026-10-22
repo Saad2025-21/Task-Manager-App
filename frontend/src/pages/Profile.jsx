@@ -28,7 +28,6 @@ export default function Profile() {
   }, []);
 
   const profile = dashboardData?.rest;
-  console.log(profile);
   return (
     <div className="display">
       <Sidebar />
@@ -76,7 +75,7 @@ export default function Profile() {
                 </span>
                 <div>
                   <p className="text-xs text-ink-muted">Email address</p>
-                  <p className="mt-1 font-medium max-sm:break-words">{profile.email}</p>
+                  <p className="mt-1 font-medium max-sm:wrap-break-word">{profile.email}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 rounded-xl bg-brand-50/70 p-4">

@@ -55,7 +55,7 @@ export default function ManageUsers() {
       const { data } = await axiosInstance.get(
         API_PATHS.USERS.GET_USER_BY_ID(id),
       );
-      console.log(data);
+    
       setSelectedUser(data?.user || data);
     } catch (requestError) {
       setError(
@@ -109,7 +109,7 @@ export default function ManageUsers() {
       .toLowerCase()
       .includes(query.trim().toLowerCase()),
   );
-  console.log(users);
+
   return (
     <div className="display">
       <Sidebar />
