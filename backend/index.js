@@ -16,10 +16,10 @@ const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
   "https://task-manager-app-five-bay.vercel.app",
   "https://task-manager-app-1386.vercel.app",
-  // ...(process.env.FRONTEND_URL || "")
-  //   .split(",")
-  //   .map((origin) => origin.trim())
-  //   .filter(Boolean),
+  ...(process.env.FRONTEND_URL || "")
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean),
 ];
 
 mongoose.connect(process.env.MONGO_URI)
