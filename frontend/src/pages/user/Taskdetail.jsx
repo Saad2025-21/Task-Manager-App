@@ -81,7 +81,7 @@ export default function Taskdetail() {
   return (
     <div className="display">
       <Sidebar />
-      <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto">
+      <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto max-lg:overflow-visible">
         {!task && !error ? (
           <div className="grid h-full min-h-48 place-items-center text-brand-600">
             <TbLoader3 className="animate-spin" size={32} />
@@ -99,7 +99,7 @@ export default function Taskdetail() {
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="inline-flex items-center gap-2 self-start text-sm font-semibold text-brand-600 hover:underline"
+              className="inline-flex max-lg:min-h-11 items-center gap-2 self-start text-sm font-semibold text-brand-600 hover:underline"
             >
               <FiArrowLeft /> Back
             </button>
@@ -113,9 +113,9 @@ export default function Taskdetail() {
               </p>
             )}
 
-            <article className="flex flex-col gap-4 rounded-2xl border border-brand-100 bg-white p-6 shadow-card">
-              <div className="flex items-start justify-between gap-3">
-                <h1 className="text-title text-brand-700">{task.title}</h1>
+            <article className="flex flex-col gap-4 rounded-2xl border border-brand-100 bg-white p-6 shadow-card max-sm:p-4">
+              <div className="flex items-start justify-between gap-3 max-sm:flex-col">
+                <h1 className="text-title text-brand-700 max-sm:text-3xl">{task.title}</h1>
                 <div className="flex shrink-0 flex-wrap gap-2">
                   <span
                     className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill px-2.5 py-0.5 text-tiny font-medium ${status.badge}`}
@@ -194,7 +194,7 @@ export default function Taskdetail() {
                 <select
                   value={task.status}
                   onChange={changeStatus}
-                  className="mt-2 w-full rounded-xl border border-line px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
+                  className="mt-2 max-lg:min-h-11 w-full rounded-xl border border-line px-4 py-2.5 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
                 >
                   <option value="pending">To do</option>
                   <option value="in-progress">In progress</option>

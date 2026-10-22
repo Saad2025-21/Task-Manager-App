@@ -35,7 +35,7 @@ export default function MyTasks() {
     return (
       <div className="display">
         <Sidebar />
-        <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto">
+        <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto max-lg:overflow-visible">
           <div className="grid h-full min-h-48 place-items-center text-brand-600">
             <TbLoader3 className="animate-spin" size={32} />
             <span className="sr-only">Loading tasks</span>
@@ -59,7 +59,7 @@ export default function MyTasks() {
   return (
     <div className="display">
       <Sidebar />
-      <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto font-sans text-ink">
+      <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto font-sans text-ink max-lg:overflow-visible">
         <header>
           <p className="text-tiny font-semibold uppercase tracking-[.16em] text-brand-600">
             Workspace
@@ -85,7 +85,7 @@ export default function MyTasks() {
               <button
                 key={filter.value}
                 type="button"
-                className={`flex items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
+                className={`flex max-lg:min-h-11 items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
                   selected === filter.value
                     ? "bg-brand-gradient text-white shadow-active"
                     : "text-ink-muted hover:bg-brand-50 hover:text-brand-600"
@@ -110,7 +110,7 @@ export default function MyTasks() {
             <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-faint" />
             <input
               placeholder="Search tasks..."
-              className="w-full rounded-xl border border-line bg-white py-2.5 pl-10 pr-4 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
+              className="max-lg:min-h-11 w-full rounded-xl border border-line bg-white py-2.5 pl-10 pr-4 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
             />
@@ -126,7 +126,7 @@ export default function MyTasks() {
           </p>
         )}
 
-        <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="min-h-0 flex-1 overflow-y-auto max-lg:overflow-visible">
           <div className="grid grid-cols-1 gap-4 pb-3 sm:grid-cols-2 2xl:grid-cols-3">
             {searchTasks.map((task) => {
               const checklist = task.todochecklist || [];
@@ -139,13 +139,13 @@ export default function MyTasks() {
                   key={task._id}
                   className="flex min-w-0 flex-col gap-3 rounded-2xl border border-brand-100 bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-active"
                 >
-                  <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-start justify-between gap-3 max-sm:flex-col">
                     <h2 className="truncate text-heading text-ink">
                       <Link to={`/user/taskdetail/${task._id}`}>
                         {task.title}
                       </Link>
                     </h2>
-                    <div className="flex shrink-0 flex-wrap justify-end gap-2">
+                    <div className="flex shrink-0 flex-wrap justify-end gap-2 max-sm:justify-start">
                       <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill bg-chart-2/10 px-2.5 py-0.5 text-tiny font-medium text-chart-2">
                         <span className="h-1.5 w-1.5 rounded-pill bg-current" />
                         {task.status}

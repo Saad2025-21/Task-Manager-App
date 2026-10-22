@@ -79,12 +79,12 @@ export default function UserDashboard() {
   return (
     <div className="display">
       <Sidebar />
-      <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto font-sans text-ink">
+      <main className="content-glow flex min-w-0 flex-1 flex-col gap-5 overflow-y-auto font-sans text-ink max-lg:overflow-visible">
         <header>
           <p className="text-tiny font-semibold uppercase tracking-[.16em] text-brand-600">
             Your overview
           </p>
-          <h1 className="mt-1 text-title text-brand-700">
+          <h1 className="mt-1 text-title text-brand-700 max-sm:text-3xl">
             Good work starts here.
           </h1>
           <p className="mt-1 text-small text-ink-muted">
@@ -178,7 +178,7 @@ export default function UserDashboard() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3 h-[55vh] overflow-hidden">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3 h-[55vh] overflow-hidden max-lg:h-auto max-lg:overflow-visible">
             {recent_task.map((task) => {
               const status = task.status;
               const checklist = task?.todochecklist || [];
@@ -193,13 +193,13 @@ export default function UserDashboard() {
                   key={task._id}
                   className="flex min-w-0 flex-col gap-3 rounded-2xl border border-brand-100 bg-white p-5 shadow-card"
                 >
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start justify-between gap-3 max-sm:flex-col">
                       <h3 className="truncate text-heading text-ink">
                         <Link to={`/user/taskdetail/${task._id}`}>
                           {task.title}
                         </Link>
                       </h3>
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 max-sm:flex-wrap">
                         <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill bg-chart-2/10 px-2.5 py-0.5 text-tiny font-medium text-chart-2">
                           <span className="h-1.5 w-1.5 rounded-pill bg-current" />
                           {(status_styles[status] || status_styles.pending).label}

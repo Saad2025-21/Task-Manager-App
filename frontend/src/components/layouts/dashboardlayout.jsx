@@ -81,12 +81,12 @@ export default function DashboardLayout() {
 
   return (
     <main className="flex min-h-full flex-col gap-5 font-sans text-ink">
-      <header className="flex items-end justify-between">
+      <header className="flex items-end justify-between max-md:flex-col max-md:items-start max-md:gap-4">
         <div>
           <p className="text-tiny font-semibold uppercase tracking-[.16em] text-brand-600">
             Workspace overview
           </p>
-          <h1 className="mt-1 text-title text-brand-700">Dashboard</h1>
+          <h1 className="mt-1 text-title text-brand-700 max-sm:text-3xl">Dashboard</h1>
           <p className="mt-1 text-small text-ink-muted">
             Plan, prioritize, and accomplish your team’s work.
           </p>
@@ -155,7 +155,7 @@ export default function DashboardLayout() {
               </Link>
             </div>
             {/* Practice here: load recent tasks, then render a card for each task and link to its detail page. */}
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3 h-[55vh] overflow-hidden">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3 h-[55vh] overflow-hidden max-lg:h-auto max-lg:overflow-visible">
               {recent_task.map((task) => {
                 const status = task.status;
                 const checklist = task?.todochecklist || [];
@@ -170,11 +170,11 @@ export default function DashboardLayout() {
                     key={task._id}
                     className="flex min-w-0 flex-col gap-3 rounded-2xl border border-brand-100 bg-white p-5 shadow-card"
                   >
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start justify-between gap-3 max-sm:flex-col">
                       <h3 className="truncate text-heading text-ink">
                         {task.title}
                       </h3>
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 max-sm:flex-wrap">
                         <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-pill bg-chart-2/10 px-2.5 py-0.5 text-tiny font-medium text-chart-2">
                           <span className="h-1.5 w-1.5 rounded-pill bg-current" />
                           {status_styles[status].label}

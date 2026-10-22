@@ -40,8 +40,8 @@ export default function Login() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f4f7f4] p-4 flex items-center justify-center">
-      <div className="grid w-full max-w-5xl overflow-visible h-[85vh] lg:h-[95vh] rounded-[28px] bg-white shadow-xl lg:grid-cols-[.95fr_1.05fr] ">
+    <main className="min-h-screen bg-[#f4f7f4] p-4 flex items-center justify-center max-lg:items-start max-lg:py-6">
+      <div className="grid w-full max-w-5xl overflow-visible h-[85vh] lg:h-[95vh] rounded-[28px] bg-white shadow-xl lg:grid-cols-[.95fr_1.05fr] max-lg:h-auto max-lg:min-h-[85vh]">
         <section className="relative hidden min-h-[580px]  h-[95vh] rounded-[28px] flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex">
           <div className="absolute -right-24 -top-20 size-80 rounded-full border border-white/15" />
           <div className="absolute -bottom-40 -left-24 size-[420px] rounded-full border border-white/15" />
@@ -79,7 +79,7 @@ export default function Login() {
             Your workspace, right where you left it.
           </p>
         </section>
-        <section className="flex items-center px-6 py-11 sm:px-12 lg:px-14">
+        <section className="flex items-center px-6 py-11 sm:px-12 lg:px-14 max-sm:px-5 max-sm:py-8">
           <div className="mx-auto w-full max-w-sm">
             <div className="mb-8 lg:hidden">
               <div className="mb-6 grid size-11 place-items-center rounded-2xl bg-brand-gradient text-xl font-bold text-white">
@@ -149,7 +149,7 @@ export default function Login() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-brand-600"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-semibold text-brand-600 max-lg:min-h-11"
                   >
                     {showPassword ? "Hide" : "Show"}
                   </button>

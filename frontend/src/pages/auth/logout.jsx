@@ -21,7 +21,7 @@ const LogoutPage = () => {
     <>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-          <div className="bg-white rounded-xl shadow-lg p-6 w-80 text-center">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-80 text-center max-sm:w-[calc(100vw-2rem)]">
             <h2 className="text-lg font-semibold mb-4">
               Are you sure you want to logout?
             </h2>
@@ -29,14 +29,14 @@ const LogoutPage = () => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                className="max-lg:min-h-11 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
               >
                 Yes
               </button>
 
               <button
                 onClick={handleCancel}
-                className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
+                className="max-lg:min-h-11 px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300"
               >
                 No
               </button>

@@ -81,7 +81,7 @@ export default function TaskBoard() {
   const user = JSON.parse(localStorage.getItem("user" || "null"));
   const isAdmin = user?.role === "admin";
   return (
-    <div className="flex h-full min-h-0 flex-col gap-6 font-sans text-ink">
+    <div className="flex h-full min-h-0 flex-col gap-6 font-sans text-ink max-lg:h-auto max-lg:min-h-full">
       <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-tiny font-semibold uppercase tracking-[.16em] text-brand-600">
@@ -104,7 +104,7 @@ export default function TaskBoard() {
         <div className="inline-flex flex-wrap items-center gap-1 rounded-pill bg-white p-1 shadow-card">
           <button
             type="button"
-            className={`flex items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
+            className={`flex max-lg:min-h-11 items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
               selected === "all"
                 ? "bg-brand-gradient text-white shadow-active"
                 : "text-ink-muted hover:bg-brand-50 hover:text-brand-600"
@@ -126,7 +126,7 @@ export default function TaskBoard() {
           </button>
           <button
             type="button"
-            className={`flex items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
+            className={`flex max-lg:min-h-11 items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
               selected === "pending"
                 ? "bg-brand-gradient text-white shadow-active"
                 : "text-ink-muted hover:bg-brand-50 hover:text-brand-600"
@@ -148,7 +148,7 @@ export default function TaskBoard() {
           </button>
           <button
             type="button"
-            className={`flex items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
+            className={`flex max-lg:min-h-11 items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
               selected === "in-progress"
                 ? "bg-brand-gradient text-white shadow-active"
                 : "text-ink-muted hover:bg-brand-50 hover:text-brand-600"
@@ -170,7 +170,7 @@ export default function TaskBoard() {
           </button>
           <button
             type="button"
-            className={`flex items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
+            className={`flex max-lg:min-h-11 items-center gap-2 rounded-pill px-4 py-1.5 text-small font-medium capitalize transition-colors ${
               selected === "completed"
                 ? "bg-brand-gradient text-white shadow-active"
                 : "text-ink-muted hover:bg-brand-50 hover:text-brand-600"
@@ -196,7 +196,7 @@ export default function TaskBoard() {
           <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-faint" />
           <input
             placeholder="Search tasks..."
-            className="w-full rounded-xl border border-line bg-white py-2.5 pl-10 pr-4 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
+            className="max-lg:min-h-11 w-full rounded-xl border border-line bg-white py-2.5 pl-10 pr-4 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
             value={query}
             onChange={(e) => setquery(e.target.value)}
           />
@@ -218,7 +218,7 @@ export default function TaskBoard() {
           {notice}
         </p>
       )}
-      <div className="min-h-0 flex-1 overflow-y-auto">
+      <div className="min-h-0 flex-1 overflow-y-auto max-lg:overflow-visible">
         <div className="grid grid-cols-1 gap-4 pb-3 sm:grid-cols-2 2xl:grid-cols-3">
           {searchtask.map((task) => {
             const checklist = task?.todochecklist || [];
@@ -230,7 +230,7 @@ export default function TaskBoard() {
                 key={task._id}
                 className="flex min-w-0 flex-col gap-3 rounded-2xl border border-brand-100 bg-white p-5 shadow-card transition hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-active"
               >
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start justify-between gap-3 max-sm:flex-col">
                   <h2 className="truncate text-heading text-ink">
                     {task.title}
                   </h2>
@@ -276,7 +276,7 @@ export default function TaskBoard() {
                           deleteTask(task);
                         }}
                         // aria-label={`Remove ${user.username || user.name}`}
-                        className="rounded-lg p-2 text-ink-faint transition relative left-20 hover:bg-red-50 hover:text-red-600"
+                        className="relative left-20 max-lg:min-h-11 max-lg:min-w-11 rounded-lg p-2 text-ink-faint transition hover:bg-red-50 hover:text-red-600 max-lg:left-0"
                       >
                         <FiTrash2 />
                       </button>

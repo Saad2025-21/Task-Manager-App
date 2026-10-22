@@ -247,7 +247,7 @@ export default function CreateTaskForm() {
               type="button"
               onClick={addTodo}
               aria-label="Add checklist item"
-              className="grid shrink-0 place-items-center rounded-xl bg-brand-700 px-4 text-white hover:bg-brand-900"
+              className="grid max-lg:min-h-11 max-lg:min-w-11 shrink-0 place-items-center rounded-xl bg-brand-700 px-4 text-white hover:bg-brand-900"
             >
               <FiPlus />
             </button>
@@ -268,7 +268,7 @@ export default function CreateTaskForm() {
                       )
                     }
                     aria-label={`Remove ${todo.text}`}
-                    className="text-ink-faint hover:text-red-600"
+                    className="grid max-lg:min-h-11 max-lg:min-w-11 place-items-center text-ink-faint hover:text-red-600"
                   >
                     <FiTrash2 />
                   </button>

@@ -113,7 +113,7 @@ export default function ManageUsers() {
   return (
     <div className="display">
       <Sidebar />
-      <main className="content-glow flex min-w-0 flex-1 flex-col gap-6 overflow-y-auto font-sans text-ink">
+      <main className="content-glow flex min-w-0 flex-1 flex-col gap-6 overflow-y-auto font-sans text-ink max-lg:overflow-visible">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-tiny font-semibold uppercase tracking-[.16em] text-brand-600">
@@ -189,7 +189,7 @@ export default function ManageUsers() {
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search people..."
-                className="w-full rounded-xl border border-line py-2.5 pl-10 pr-3 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
+                className="max-lg:min-h-11 w-full rounded-xl border border-line py-2.5 pl-10 pr-3 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
               />
             </label>
           </div>
@@ -254,7 +254,7 @@ export default function ManageUsers() {
                         <button
                           onClick={() => setPendingDelete(user)}
                           aria-label={`Remove ${user.username || user.name}`}
-                          className="rounded-lg p-2 text-ink-faint transition hover:bg-red-50 hover:text-red-600"
+                          className="max-lg:min-h-11 max-lg:min-w-11 rounded-lg p-2 text-ink-faint transition hover:bg-red-50 hover:text-red-600"
                         >
                           <FiTrash2 />
                         </button>
@@ -293,7 +293,7 @@ export default function ManageUsers() {
           <section
             role="dialog"
             aria-modal="true"
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-modal"
+            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-modal max-lg:max-h-[calc(100dvh-2rem)] max-lg:overflow-y-auto max-sm:p-4"
           >
             <div className="mb-5 flex items-start justify-between">
               <div>
@@ -319,7 +319,7 @@ export default function ManageUsers() {
                   setPendingDelete(null);
                 }}
                 aria-label="Close dialog"
-                className="rounded-lg p-2 text-ink-muted hover:bg-brand-50"
+                className="max-lg:min-h-11 max-lg:min-w-11 rounded-lg p-2 text-ink-muted hover:bg-brand-50"
               >
                 <FiX />
               </button>
@@ -366,13 +366,13 @@ export default function ManageUsers() {
                   <button
                     type="button"
                     onClick={() => setShowCreate(false)}
-                    className="rounded-xl px-4 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface"
+                    className="max-lg:min-h-11 rounded-xl px-4 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface"
                   >
                     Cancel
                   </button>
                   <button
                     disabled={saving}
-                    className="rounded-xl bg-brand-gradient px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
+                    className="max-lg:min-h-11 rounded-xl bg-brand-gradient px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-60"
                   >
                     {saving ? "Creating..." : "Create member"}
                   </button>
@@ -402,7 +402,7 @@ export default function ManageUsers() {
                 </p>
                 <button
                   onClick={() => setSelectedUser(null)}
-                  className="w-full rounded-xl bg-brand-gradient py-3 text-sm font-semibold text-white"
+                  className="max-lg:min-h-11 w-full rounded-xl bg-brand-gradient py-3 text-sm font-semibold text-white"
                 >
                   Done
                 </button>
@@ -422,13 +422,13 @@ export default function ManageUsers() {
                 <div className="mt-6 flex justify-end gap-2">
                   <button
                     onClick={() => setPendingDelete(null)}
-                    className="rounded-xl px-4 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface"
+                    className="max-lg:min-h-11 rounded-xl px-4 py-2.5 text-sm font-medium text-ink-muted hover:bg-surface"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={deleteUser}
-                    className="rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
+                    className="max-lg:min-h-11 rounded-xl bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
                   >
                     Remove member
                   </button>

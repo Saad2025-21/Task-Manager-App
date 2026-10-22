@@ -5,7 +5,7 @@ const Dashboard = () => {
   return (
     <div className="display">
       <Sidebar />
-      <div className="content-glow flex-1 min-w-0 min-h-0 overflow-auto">
+      <div className="content-glow flex-1 min-w-0 min-h-0 overflow-auto max-lg:overflow-visible">
         <Dashboardlayout />
       </div>
     </div>

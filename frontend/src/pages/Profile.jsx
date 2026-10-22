@@ -32,12 +32,12 @@ export default function Profile() {
   return (
     <div className="display">
       <Sidebar />
-      <main className="content-glow flex min-w-0 flex-1 flex-col gap-6 overflow-y-auto font-sans text-ink">
+      <main className="content-glow flex min-w-0 flex-1 flex-col gap-6 overflow-y-auto font-sans text-ink max-lg:overflow-visible">
         <header>
           <p className="text-tiny font-semibold uppercase tracking-[.16em] text-brand-600">
             Account
           </p>
-          <h1 className="mt-1 text-title text-brand-700">Your profile</h1>
+          <h1 className="mt-1 text-title text-brand-700 max-sm:text-3xl">Your profile</h1>
           <p className="mt-1 text-small text-ink-muted">
             Your account details and workspace access.
           </p>
@@ -76,7 +76,7 @@ export default function Profile() {
                 </span>
                 <div>
                   <p className="text-xs text-ink-muted">Email address</p>
-                  <p className="mt-1 font-medium">{profile.email}</p>
+                  <p className="mt-1 font-medium max-sm:break-words">{profile.email}</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 rounded-xl bg-brand-50/70 p-4">

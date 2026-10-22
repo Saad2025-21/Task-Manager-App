@@ -47,8 +47,8 @@ export default function Signup() {
     return () => clearTimeout(id);
   }, [error, message]);
   return (
-    <main className="min-h-screen bg-[#f4f7f4] p-4 flex items-center justify-center">
-      <div className="grid lg:w-full w-[80vw] max-w-5xl overflow-visible h-[85vh] lg:h-[95vh] rounded-[28px] bg-white shadow-xl lg:grid-cols-[.95fr_1.05fr] ">
+    <main className="min-h-screen bg-[#f4f7f4] p-4 flex items-center justify-center max-lg:items-start max-lg:py-6">
+      <div className="grid lg:w-full w-[80vw] max-w-5xl overflow-visible h-[85vh] lg:h-[95vh] rounded-[28px] bg-white shadow-xl lg:grid-cols-[.95fr_1.05fr] max-lg:w-full max-lg:h-auto max-lg:min-h-[85vh]">
         {/* desktop */}
         <section className="relative hidden min-h-[580px]  h-[95vh] rounded-[28px] flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex">
           <div className="absolute -right-24 -top-20 size-80 rounded-full border border-white/15" />
@@ -88,8 +88,8 @@ export default function Signup() {
           </p>
         </section>
         {/* Mobile */}
-        <section className="flex items-center px-6 py-11 sm:px-12 lg:px-14 h-full rounded-[28px]">
-          <div className="mx-auto w-full max-w-sm h-full overflow-visible">
+        <section className="flex items-center px-6 py-11 sm:px-12 lg:px-14 h-full rounded-[28px] max-sm:px-5 max-sm:py-8 max-lg:h-auto">
+          <div className="mx-auto w-full max-w-sm h-full overflow-visible max-lg:h-auto">
             <div className="mb-8 lg:hidden">
               <div className="mb-6 grid size-11 place-items-center rounded-2xl bg-brand-gradient text-xl font-bold text-white">
                 <SiTask className="animate-pulse"/>
@@ -171,7 +171,7 @@ export default function Signup() {
               </label>
               <fieldset className="mb-[12px] text-sm font-medium text-ink">
                 <legend className="mb-2">Role</legend>
-                <div className="flex gap-6">
+                <div className="flex gap-6 max-sm:flex-wrap">
                   <label className="flex items-center gap-2">
                     <input
                       type="radio"
@@ -203,7 +203,7 @@ export default function Signup() {
                       onChange={(e) =>
                         setForm({ ...form, adminJoinCode: e.target.value })
                       }
-                      className="m-0 w-[25vw] lg:w-[12vw]  rounded-[10px] border border-line p-[5px] text-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
+                      className="m-0 w-[25vw] lg:w-[12vw] max-sm:w-full rounded-[10px] border border-line p-[5px] text-sm outline-none transition focus:border-brand-500 focus:ring-4 focus:ring-brand-100"
                     />
                   )}
                 </div>

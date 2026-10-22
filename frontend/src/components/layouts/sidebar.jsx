@@ -71,7 +71,7 @@ export default function Sidebar() {
       {/* --- Mobile Hamburger Button --- */}
       <button
         onClick={toggleSidebar}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-surface shadow-card border border-line text-ink-muted hover:text-brand-600 transition-colors"
+        className="lg:hidden fixed top-4 left-4 z-50 min-h-11 min-w-11 p-2 rounded-md bg-surface shadow-card border border-line text-ink-muted hover:text-brand-600 transition-colors"
         aria-label="Toggle Menu"
       >
         {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -89,7 +89,7 @@ export default function Sidebar() {
       <aside
         className={`
                  fixed inset-y-3 left-3 z-40 flex w-55 shrink-0 flex-col rounded-2xl bg-brand-50 px-4 pb-4 pt-6 shadow-xl
-        transition-transform duration-300 ease-in-out
+        max-lg:overflow-y-auto transition-transform duration-300 ease-in-out
         lg:static lg:inset-auto lg:h-full lg:shrink-0 lg:translate-x-0 lg:shadow-none
                 ${isOpen ? "translate-x-0" : "-translate-x-full"}
             `}
