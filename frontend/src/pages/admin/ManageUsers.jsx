@@ -194,7 +194,7 @@ export default function ManageUsers() {
             </label>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full min-w-[620px] text-left text-sm">
+            <table className="w-full min-w-155 text-left text-sm">
               <thead className="bg-brand-50/70 text-xs uppercase tracking-wider text-ink-muted">
                 <tr>
                   <th className="px-6 py-3 font-semibold">Member</th>
