@@ -113,7 +113,7 @@ export default function ManageUsers() {
   return (
     <div className="display">
       <Sidebar />
-      <main className="content-glow flex min-w-0 flex-1 flex-col gap-6 overflow-y-auto font-sans text-ink max-lg:overflow-visible">
+      <main className="content-glow flex min-w-0 w-[90vw] flex-1 flex-col gap-6 overflow-y-auto font-sans text-ink max-lg:overflow-visible">
         <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-tiny font-semibold uppercase tracking-[.16em] text-brand-600">
