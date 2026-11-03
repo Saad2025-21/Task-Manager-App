@@ -8,8 +8,8 @@ import {
   FiX,
 } from "react-icons/fi";
 import Sidebar from "../../components/layouts/sidebar";
-import axiosInstance from "../../utilis/axiosinstance";
-import { API_PATHS } from "../../utilis/apipath";
+import axiosInstance from "../../utils/axiosinstance";
+import { API_PATHS } from "../../utils/apipath";
 
 const emptyForm = { name: "", email: "", password: "" };
 

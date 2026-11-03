@@ -8,8 +8,8 @@
 **Live demo:** https://task-manager-app-1386.vercel.app/
 
 
-![Dashboard screenshot](./assests/dashboard.png)
-![SignUp screenshot](./assests/signup.png)
+![Dashboard screenshot](./assets/dashboard.png)
+![SignUp screenshot](./assets/signup.png)
 
 ---
 
@@ -87,7 +87,7 @@ task-manager/
         │   ├── admin/            # Dashboard, ManageTask, ManageUsers, CreateTask
         │   └── user/             # UserDashboard, Mytask, Taskdetail
         ├── routes/               # PrivateRoute (role guard)
-        ├── utilis/               # axiosinstance, apipath
+        ├── utils/               # axiosinstance, apipath
         └── App.jsx               # Route definitions
 ```
 
@@ -102,8 +102,8 @@ task-manager/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/Saad2025-21
-cd https://github.com/Saad2025-21/Task-Manager-App
+git clone https://github.com/Saad2025-21/Task-Manager-App
+cd Task-Manager-App
 ```
 
 ### 2. Set up the backend
@@ -129,7 +129,7 @@ The app starts on `http://localhost:5173`.
 
 ### 4. Point the frontend at your API
 
-In `frontend/src/utilis/apipath.js`, set the base URL:
+In `frontend/src/utils/apipath.js`, set the base URL:
 
 ```js
 const BASE_URL = "http://localhost:3000";

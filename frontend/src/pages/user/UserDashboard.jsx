@@ -5,8 +5,8 @@ import {
   TaskPriorityChart,
 } from "../../components/layouts/charts";
 import { useState, useEffect } from "react";
-import axiosInstance from "../../utilis/axiosinstance";
-import { API_PATHS } from "../../utilis/apipath";
+import axiosInstance from "../../utils/axiosinstance";
+import { API_PATHS } from "../../utils/apipath";
 import { TbLoader3 } from "react-icons/tb";
 import { Link } from "react-router-dom";
 

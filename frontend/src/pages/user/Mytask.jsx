@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { TbLoader3 } from "react-icons/tb";
 import Sidebar from "../../components/layouts/sidebar";
-import axiosInstance from "../../utilis/axiosinstance";
-import { API_PATHS } from "../../utilis/apipath";
+import axiosInstance from "../../utils/axiosinstance";
+import { API_PATHS } from "../../utils/apipath";
 
 export default function MyTasks() {
   const [tasks, setTasks] = useState(null);

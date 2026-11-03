@@ -1,7 +1,7 @@
 import { FiArrowUpRight, FiSearch } from "react-icons/fi";
 import { useState, useEffect } from "react";
-import axiosInstance from "../../utilis/axiosinstance";
-import { API_PATHS } from "../../utilis/apipath";
+import axiosInstance from "../../utils/axiosinstance";
+import { API_PATHS } from "../../utils/apipath";
 import { TbLoader3 } from "react-icons/tb";
 import { FiTrash2 } from "react-icons/fi";
 export default function TaskBoard() {

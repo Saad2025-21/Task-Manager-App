@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 import { TbLoader3 } from "react-icons/tb";
 import Sidebar from "../../components/layouts/sidebar";
-import axiosInstance from "../../utilis/axiosinstance";
-import { API_PATHS } from "../../utilis/apipath";
+import axiosInstance from "../../utils/axiosinstance";
+import { API_PATHS } from "../../utils/apipath";
 
 const STATUS_STYLES = {
   pending: { label: "To do", badge: "bg-chart-2/10 text-chart-2" },

@@ -1,8 +1,8 @@
 import { FiMail, FiShield, FiUser } from "react-icons/fi";
 import Sidebar from "../components/layouts/sidebar";
 import { useEffect, useState } from "react";
-import axiosInstance from "../utilis/axiosinstance";
-import { API_PATHS } from "../utilis/apipath";
+import axiosInstance from "../utils/axiosinstance";
+import { API_PATHS } from "../utils/apipath";
 
 export default function Profile() {
   const [dashboardData, setdashboardData] = useState(null);

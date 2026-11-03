@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { FiArrowUpRight, FiList } from "react-icons/fi";
 import { TbLoader3 } from "react-icons/tb";
 import { TaskDistributionChart, TaskPriorityChart } from "./charts";
-import axiosInstance from "../../utilis/axiosinstance";
-import { API_PATHS } from "../../utilis/apipath";
+import axiosInstance from "../../utils/axiosinstance";
+import { API_PATHS } from "../../utils/apipath";
 
 export default function DashboardLayout() {
   const [dashboardData, setDashboardData] = useState(null);
