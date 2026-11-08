@@ -250,4 +250,4 @@ Permissions are enforced on the server by the `verifyToken` and `adminOnly` midd
 ## Author
 
 **Saad Ansari**
-GitHub: [@Saad2025-21](https://github.com/Saad2025-21) · LinkedIn: [Saad Ansari](https://www.linkedin.com/in/saad-ansari-3a863b401)
+GitHub: [@Saad2025-21](https://github.com/Saad2025-21) · LinkedIn: [Saad Ansari](https://www.linkedin.com/in/sn-ansari)
